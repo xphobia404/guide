@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Treasury module user guide for the Finance Management System."
+  />
+  <title>Treasury Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --treasury: #28c76f;
+      --treasury-dark: #1ea85c;
+      --treasury-light: #e9faef;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--treasury-dark);
+      background: var(--treasury-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #1ea85c, #44d883);
+      box-shadow: 0 14px 32px rgba(40, 199, 111, 0.22);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--treasury-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--treasury-dark);
+      border-radius: 9px;
+      background: var(--treasury-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #17633a;
+      border-radius: 5px;
+      background: #e5f9ed;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--treasury-dark);
+      border-radius: 999px;
+      background: var(--treasury-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #1c5d36;
+      border-left: 4px solid var(--treasury);
+      border-radius: 0 9px 9px 0;
+      background: var(--treasury-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--treasury);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--treasury);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .status-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 650px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 180px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-ready {
+      color: #825318;
+      background: #fff0d9;
+    }
+
+    .status-processing {
+      color: #1d6174;
+      background: #dff9fd;
+    }
+
+    .status-approved {
+      color: #146137;
+      background: #def7e8;
+    }
+
+    .status-released {
+      color: #4d3678;
+      background: #eee8ff;
+    }
+
+    .status-returned {
+      color: #923333;
+      background: #ffe5e5;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Treasury</span>
+        <a href="#payment-list">1. Payment List</a>
+        <a href="#payment-process">2. Payment Process</a>
+        <a href="#approval">3. Approval</a>
+        <a href="#payment-release">4. Payment Release</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#payment-status">Payment Status</a>
+        <a href="#treasury-workflow">Treasury Workflow</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">TREASURY MODULE</span>
+        <h1>Treasury User Guide</h1>
+        <p>
+          The Treasury module is used to manage approved payment requests,
+          prepare payment instructions, perform treasury approval, and release
+          payments in accordance with the company payment workflow.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Payment List</strong>
+          <span>Review transactions that are ready or pending for payment.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Payment Process</strong>
+          <span>Prepare payment instructions and validate payment details.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Approval</strong>
+          <span>Approve payment instructions before funds are released.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Payment Release</strong>
+          <span>Release approved payments and record payment references.</span>
+        </div>
+      </section>
+
+      <section id="payment-list" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Payment List</h2>
+            <p>
+              Payment List displays transactions that have completed the required
+              Operational and Controller stages and are ready to be reviewed by
+              Treasury.
+            </p>
+          </div>
+        </div>
+
+        <h3>Key Functions</h3>
+        <ul>
+          <li>View payment requests based on their current payment status.</li>
+          <li>Search transactions by vendor, payment reference, document number, or period.</li>
+          <li>Review payment amount, currency, source transaction, and bank details.</li>
+          <li>Identify urgent or overdue payments that require immediate action.</li>
+        </ul>
+
+        <h3>How to use Payment List</h3>
+        <ol>
+          <li>Open <code>Treasury → Payment List</code>.</li>
+          <li>Use available filters such as payment date, vendor, entity, currency, or status.</li>
+          <li>Select a transaction from the list to open its details.</li>
+          <li>Review the payment request, supporting documents, and approval history.</li>
+          <li>Continue the transaction to Payment Process when the payment data is complete.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Payment List page</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/payment-list.png"
+            alt="Treasury Payment List page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Payment List screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/treasury/images/payment-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Before moving a transaction into the payment process, make sure its
+            invoice, approval history, vendor details, amount, currency, and
+            destination bank account are complete and valid.
+          </p>
+        </div>
+      </section>
+
+      <section id="payment-process" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Payment Process</h2>
+            <p>
+              Payment Process is used to prepare and validate payment instructions
+              before they are submitted for Treasury approval.
+            </p>
+          </div>
+        </div>
+
+        <h3>Information to validate</h3>
+        <ul>
+          <li>Payment date and payment reference number.</li>
+          <li>Vendor or beneficiary name.</li>
+          <li>Destination bank, account holder name, and bank account number.</li>
+          <li>Payment amount, currency, exchange rate, and bank charges if applicable.</li>
+          <li>Source transaction, invoice, Purchase Order, and supporting documents.</li>
+        </ul>
+
+        <h3>How to process a payment</h3>
+        <ol>
+          <li>Open <code>Treasury → Payment Process</code>.</li>
+          <li>Select a transaction that is ready for payment preparation.</li>
+          <li>Review the beneficiary details and the destination bank account.</li>
+          <li>Verify the payment amount, currency, taxes, deductions, and net payable amount.</li>
+          <li>Enter or confirm the intended payment date.</li>
+          <li>Add payment notes or references when required.</li>
+          <li>Save the payment instruction or submit it for Treasury approval.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Payment Process form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Payment Process screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/treasury/images/payment-process.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Always verify the beneficiary bank account, account holder name,
+            payment amount, and currency before submitting a payment instruction.
+            Incorrect bank information may cause failed or misdirected payments.
+          </p>
+        </div>
+      </section>
+
+      <section id="approval" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Approval</h2>
+            <p>
+              The Treasury Approval menu is used by authorized approvers to review
+              and approve payment instructions before the payment can be released.
+            </p>
+          </div>
+        </div>
+
+        <h3>Approval checklist</h3>
+        <ul>
+          <li>The source transaction has completed the required workflow and approvals.</li>
+          <li>The invoice and payment supporting documents are valid and complete.</li>
+          <li>The beneficiary bank account details have been verified.</li>
+          <li>The payment amount, taxes, and currency are correct.</li>
+          <li>The payment date and cash availability are aligned with company policy.</li>
+        </ul>
+
+        <h3>How to approve a payment</h3>
+        <ol>
+          <li>Open <code>Treasury → Approval</code>.</li>
+          <li>Select a payment instruction with a pending approval status.</li>
+          <li>Open the payment details and review all relevant information.</li>
+          <li>Review the attached documents and approval history.</li>
+          <li>Click <code>Approve</code> if the payment is valid and ready to be released.</li>
+          <li>Click <code>Return</code> if additional data or documents are required.</li>
+          <li>Click <code>Reject</code> if the payment should not proceed.</li>
+          <li>Provide a clear note for every Return or Reject action.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Treasury Approval page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Treasury Approval screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/treasury/images/treasury-approval.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Approval authority may depend on payment amount, entity, currency,
+            payment type, or role configuration. Only approve transactions within
+            your authorized approval limit.
+          </p>
+        </div>
+      </section>
+
+      <section id="payment-release" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Payment Release</h2>
+            <p>
+              Payment Release is used to release payments that have completed all
+              required Treasury approvals and are ready to be sent through the
+              company banking process.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to release a payment</h3>
+        <ol>
+          <li>Open <code>Treasury → Payment Release</code>.</li>
+          <li>Select a payment that has an approved and ready-to-release status.</li>
+          <li>Review the payment reference, beneficiary, bank account, amount, and currency one final time.</li>
+          <li>Confirm that all approvals and supporting documents are complete.</li>
+          <li>Perform the <code>Release</code> action according to the company procedure.</li>
+          <li>Enter the bank reference number, transaction number, or payment proof if available.</li>
+          <li>Save the completed payment release record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Payment Release page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Payment Release screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/treasury/images/payment-release.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Payment release is a critical action. Do not release a payment unless
+            the beneficiary details, payment amount, approval status, and supporting
+            documents have been fully verified.
+          </p>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            After a payment is released, ensure the payment reference or proof of
+            payment is recorded correctly. The completed transaction should then be
+            available for tracking in Transaction History.
+          </p>
+        </div>
+      </section>
+
+      <section id="payment-status" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Payment Status</h2>
+            <p>
+              Payment statuses help Treasury users understand the current position
+              of each transaction in the payment workflow.
+            </p>
+          </div>
+        </div>
+
+        <div class="status-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Recommended Treasury Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status status-ready">Ready for Payment</span></td>
+                <td>The transaction has completed prior checks and is ready for Treasury review.</td>
+                <td>Review the transaction in Payment List and proceed to Payment Process when complete.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-processing">On Process</span></td>
+                <td>The payment instruction is being prepared or requires additional validation.</td>
+                <td>Complete payment details, supporting documents, or clarification before submission.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-approved">Approved</span></td>
+                <td>The payment instruction has been approved by the authorized Treasury approver.</td>
+                <td>Proceed to Payment Release according to the approved payment date.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-returned">Returned / Rejected</span></td>
+                <td>The payment was returned for correction or rejected during the payment workflow.</td>
+                <td>Review the approver note, correct the issue, and resubmit if applicable.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-released">Released / Paid</span></td>
+                <td>The payment has been released and recorded as completed.</td>
+                <td>Confirm the bank reference and review the completed record in Transaction History.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="treasury-workflow" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">→</div>
+          <div>
+            <h2>Treasury Workflow</h2>
+            <p>
+              The following is the standard high-level flow for a payment managed
+              by the Treasury module.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Payment List</strong>
+            <span>Review approved transactions that are ready for payment.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Payment Process</strong>
+            <span>Prepare and validate the payment instruction details.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Treasury Approval</strong>
+            <span>Obtain authorization based on the applicable approval matrix.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Payment Release</strong>
+            <span>Release the payment and record the bank transaction reference.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Workflow stages, approval levels, and available actions may differ
+            depending on payment type, payment value, entity, currency, bank
+            requirements, and system role permissions.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Treasury User Guide
+  </footer>
+</body>
+</html>

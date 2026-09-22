@@ -1,0 +1,1322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Controller module user guide for the Finance Management System."
+  />
+  <title>Controller Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --controller: #00cfe8;
+      --controller-dark: #009bb0;
+      --controller-light: #e7fbff;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--controller-dark);
+      background: var(--controller-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #00abc1, #00d8ef);
+      box-shadow: 0 14px 32px rgba(0, 207, 232, 0.2);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--controller-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--controller-dark);
+      border-radius: 9px;
+      background: var(--controller-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #1a5963;
+      border-radius: 5px;
+      background: #e5fbff;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--controller-dark);
+      border-radius: 999px;
+      background: var(--controller-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #1e5c65;
+      border-left: 4px solid var(--controller);
+      border-radius: 0 9px 9px 0;
+      background: var(--controller-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--controller);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--controller);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .status-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 175px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-pending {
+      color: #825318;
+      background: #fff0d9;
+    }
+
+    .status-verified {
+      color: #146137;
+      background: #def7e8;
+    }
+
+    .status-returned {
+      color: #923333;
+      background: #ffe5e5;
+    }
+
+    .status-on-process {
+      color: #1d6174;
+      background: #dff9fd;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Controller</span>
+        <a href="#outstanding-po">1. Outstanding PO</a>
+        <a href="#invoice-confirmation">2. Invoice Confirmation</a>
+        <a href="#vendor">3. Vendor</a>
+        <a href="#payroll">4. Payroll</a>
+        <a href="#cash-advance">5. Cash Advance</a>
+        <a href="#allowance">6. Allowance</a>
+        <a href="#liquidation">7. Liquidation</a>
+        <a href="#upload-add-docs">8. Upload Add Docs</a>
+        <a href="#approval">9. Approval</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#status-controller">Controller Status</a>
+        <a href="#controller-workflow">Controller Workflow</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">CONTROLLER MODULE</span>
+        <h1>Controller User Guide</h1>
+        <p>
+          The Controller module is used to validate transaction data, review
+          supporting documents, confirm invoices, verify operational requests,
+          and approve or return transactions before they proceed to Treasury.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Document Validation</strong>
+          <span>Review transaction completeness and supporting documents.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Invoice Confirmation</strong>
+          <span>Validate vendor invoices against Purchase Orders and transaction data.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Cost Control</strong>
+          <span>Review Payroll, Cash Advance, Allowance, and Liquidation requests.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Approval Decision</strong>
+          <span>Approve, return, or reject transactions based on validation results.</span>
+        </div>
+      </section>
+
+      <section id="outstanding-po" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Outstanding PO</h2>
+            <p>
+              Outstanding PO is used to monitor Purchase Orders that are still open,
+              incomplete, pending an invoice, pending payment, or requiring follow-up.
+            </p>
+          </div>
+        </div>
+
+        <h3>Key Functions</h3>
+        <ul>
+          <li>View Purchase Orders that have not completed the full workflow.</li>
+          <li>Review PO status by vendor, period, entity, vessel, amount, or workflow status.</li>
+          <li>Identify Purchase Orders that have no invoice or no completed payment process.</li>
+          <li>Follow up on Purchase Orders that require documents, corrections, or action from other teams.</li>
+        </ul>
+
+        <h3>How to use Outstanding PO</h3>
+        <ol>
+          <li>Open <code>Controller → Outstanding PO</code>.</li>
+          <li>Use available filters such as date range, vendor, entity, vessel, status, or PO number.</li>
+          <li>Select a Purchase Order from the list.</li>
+          <li>Review the PO details, total amount, related invoice status, and supporting documents.</li>
+          <li>Follow up on incomplete or overdue Purchase Orders based on the transaction status.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Outstanding PO page</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/outstanding-po.png"
+            alt="Controller Outstanding PO page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Outstanding PO screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/outstanding-po.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Prioritize Purchase Orders with high values, upcoming due dates, missing
+            invoice references, or transactions that have remained in the same status
+            for an extended period.
+          </p>
+        </div>
+      </section>
+
+      <section id="invoice-confirmation" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Invoice Confirmation</h2>
+            <p>
+              Invoice Confirmation is used to validate vendor invoices before they
+              proceed to the payment workflow.
+            </p>
+          </div>
+        </div>
+
+        <h3>Information to verify</h3>
+        <ul>
+          <li>Invoice number and invoice date.</li>
+          <li>Vendor identity and vendor tax information.</li>
+          <li>Purchase Order reference or related source transaction.</li>
+          <li>Invoice amount, taxes, currency, deductions, and total payable amount.</li>
+          <li>Invoice document, tax invoice, delivery order, receipt, or other supporting documents.</li>
+        </ul>
+
+        <h3>How to confirm an invoice</h3>
+        <ol>
+          <li>Open <code>Controller → Invoice Confirmation</code>.</li>
+          <li>Select an invoice with a pending confirmation status.</li>
+          <li>Open the invoice detail and review all invoice information.</li>
+          <li>Compare the invoice against the related Purchase Order and supporting documents.</li>
+          <li>Confirm the vendor, amount, currency, taxes, and document completeness.</li>
+          <li>Click <code>Confirm</code> if the invoice is valid.</li>
+          <li>Click <code>Return</code> or <code>Reject</code> if there is a discrepancy.</li>
+          <li>Provide a clear note when returning or rejecting an invoice.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Invoice Confirmation detail</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Invoice Confirmation screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/invoice-confirmation.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Do not confirm an invoice if the vendor, Purchase Order reference,
+            amount, taxes, currency, or supporting documents do not match the
+            expected transaction data.
+          </p>
+        </div>
+      </section>
+
+      <section id="vendor" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Vendor</h2>
+            <p>
+              The Vendor menu allows Controller users to review vendor details used
+              in Purchase Orders, invoice confirmation, and payment transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>Vendor information to review</h3>
+        <ul>
+          <li>Vendor name and vendor status.</li>
+          <li>Vendor code and contact information.</li>
+          <li>Tax identification and tax-related data, where applicable.</li>
+          <li>Registered bank account information.</li>
+          <li>Supporting legal documents or vendor documentation, if available.</li>
+        </ul>
+
+        <h3>How to review vendor data</h3>
+        <ol>
+          <li>Open <code>Controller → Vendor</code>.</li>
+          <li>Search for the vendor using its name, vendor code, or status.</li>
+          <li>Open the vendor detail page.</li>
+          <li>Compare the vendor information against the invoice or Purchase Order.</li>
+          <li>Request a Master Data update if vendor information is incorrect or incomplete.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Vendor detail page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Vendor detail screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/vendor-detail.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="payroll" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Payroll</h2>
+            <p>
+              The Controller Payroll menu is used to review payroll requests before
+              they are approved and forwarded to the next workflow stage.
+            </p>
+          </div>
+        </div>
+
+        <h3>Payroll review checklist</h3>
+        <ul>
+          <li>The payroll period is correct and not duplicated.</li>
+          <li>Recipient information and payment components are complete.</li>
+          <li>The total amount matches supporting payroll documentation.</li>
+          <li>Entity, department, and budget references are valid.</li>
+          <li>Required documents are attached according to internal procedures.</li>
+        </ul>
+
+        <h3>How to review Payroll</h3>
+        <ol>
+          <li>Open <code>Controller → Payroll</code>.</li>
+          <li>Select a payroll record waiting for review.</li>
+          <li>Review the period, recipients, payment components, totals, and supporting documents.</li>
+          <li>Confirm that the data meets applicable finance and payroll requirements.</li>
+          <li>Approve the record if valid, or return it for correction if information is incomplete or incorrect.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Payroll review page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Payroll review screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/payroll-review.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cash-advance" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">05</div>
+          <div>
+            <h2>Cash Advance</h2>
+            <p>
+              The Controller Cash Advance menu is used to validate operational cash
+              advance requests before they proceed to approval or payment processing.
+            </p>
+          </div>
+        </div>
+
+        <h3>Cash Advance review checklist</h3>
+        <ul>
+          <li>The business purpose is clearly described.</li>
+          <li>The requested amount is reasonable and aligned with business needs.</li>
+          <li>The entity, department, vessel, and budget account are correct.</li>
+          <li>Required quotation, estimate, or supporting documents are attached.</li>
+          <li>The requester has no unresolved previous Cash Advance, if that rule applies.</li>
+        </ul>
+
+        <h3>How to review Cash Advance</h3>
+        <ol>
+          <li>Open <code>Controller → Cash Advance</code>.</li>
+          <li>Select a Cash Advance request with a pending review status.</li>
+          <li>Review the purpose, requested amount, currency, references, and attachments.</li>
+          <li>Confirm that the request meets the applicable company policy.</li>
+          <li>Click <code>Verify</code> or <code>Approve</code> if valid.</li>
+          <li>Click <code>Return</code> if the request requires clarification or correction.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Cash Advance review page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Cash Advance review screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/cash-advance-review.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="allowance" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">06</div>
+          <div>
+            <h2>Allowance</h2>
+            <p>
+              The Controller Allowance menu is used to validate allowance requests
+              submitted by Operational users before approval or payment processing.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to review Allowance</h3>
+        <ol>
+          <li>Open <code>Controller → Allowance</code>.</li>
+          <li>Select an allowance record that is waiting for review.</li>
+          <li>Review the recipient, allowance type, period, amount, and related cost reference.</li>
+          <li>Check supporting documents where required.</li>
+          <li>Approve the request if valid, or return it with a clear explanation if it needs correction.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Allowance review page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Allowance review screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/allowance-review.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="liquidation" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">07</div>
+          <div>
+            <h2>Liquidation</h2>
+            <p>
+              The Controller Liquidation menu is used to validate Cash Advance
+              accountability records based on actual expense details and supporting
+              payment documents.
+            </p>
+          </div>
+        </div>
+
+        <h3>Liquidation review checklist</h3>
+        <ul>
+          <li>The Cash Advance reference matches the liquidation record.</li>
+          <li>All actual expense details have been entered.</li>
+          <li>Invoices, receipts, or payment evidence are attached.</li>
+          <li>The Cash Advance amount and total actual expenses have been reconciled.</li>
+          <li>Any balance, refund, or additional reimbursement is clearly explained.</li>
+        </ul>
+
+        <h3>How to review Liquidation</h3>
+        <ol>
+          <li>Open <code>Controller → Liquidation</code>.</li>
+          <li>Select a liquidation record that is waiting for review.</li>
+          <li>Review the linked Cash Advance and the actual expense breakdown.</li>
+          <li>Open and validate each supporting document.</li>
+          <li>Review the difference between the advance amount and actual expenses.</li>
+          <li>Approve the liquidation if complete and valid.</li>
+          <li>Return the record with clear notes if information or documents are missing.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Liquidation review page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Liquidation review screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/liquidation-review.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Do not approve a liquidation if the expense evidence is incomplete or
+            the difference between the Cash Advance and actual expenses has not been
+            properly explained.
+          </p>
+        </div>
+      </section>
+
+      <section id="upload-add-docs" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">08</div>
+          <div>
+            <h2>Upload Add Docs</h2>
+            <p>
+              Upload Add Docs is used to add supporting documents to a transaction
+              during the Controller review process.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to upload additional documents</h3>
+        <ol>
+          <li>Open the relevant transaction from the appropriate Controller menu.</li>
+          <li>Select <code>Upload Add Docs</code> or the equivalent document upload action.</li>
+          <li>Click <code>Choose File</code> or <code>Browse</code>.</li>
+          <li>Select the required document from your device.</li>
+          <li>Add a document description if the system provides that field.</li>
+          <li>Click <code>Upload</code> or <code>Save</code>.</li>
+          <li>Confirm that the uploaded document appears in the transaction attachment list.</li>
+        </ol>
+
+        <h3>Recommended document naming</h3>
+        <ul>
+          <li><code>invoice-vendor-name.pdf</code></li>
+          <li><code>tax-invoice-PO-001.pdf</code></li>
+          <li><code>payment-proof-reference-001.pdf</code></li>
+          <li><code>supporting-document-cash-advance-001.pdf</code></li>
+        </ul>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Upload Add Docs form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Upload Add Docs screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/upload-add-docs.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Use clear and consistent document names. This makes future validation,
+            payment reconciliation, reporting, and audit review much easier.
+          </p>
+        </div>
+      </section>
+
+      <section id="approval" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">09</div>
+          <div>
+            <h2>Approval</h2>
+            <p>
+              The Controller Approval menu displays verified transactions that require
+              an approval decision before proceeding to Treasury.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to approve a transaction</h3>
+        <ol>
+          <li>Open <code>Controller → Approval</code>.</li>
+          <li>Select a transaction with a pending approval status.</li>
+          <li>Open the transaction detail and review the transaction information.</li>
+          <li>Review the verification results, amount, references, and supporting documents.</li>
+          <li>Click <code>Approve</code> if the transaction meets all requirements.</li>
+          <li>Click <code>Return</code> if additional correction or documents are required.</li>
+          <li>Click <code>Reject</code> if the transaction should not proceed.</li>
+          <li>Provide a detailed note for every Return or Reject action.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Controller Approval page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Controller Approval screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/controller/images/controller-approval.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            Once a transaction has been approved by Controller, it can proceed to
+            Treasury for payment processing according to the configured workflow.
+          </p>
+        </div>
+      </section>
+
+      <section id="status-controller" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Controller Status Reference</h2>
+            <p>
+              The available status names may vary by transaction type, but the
+              following describes common Controller-related workflow statuses.
+            </p>
+          </div>
+        </div>
+
+        <div class="status-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Recommended Controller Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status status-pending">Pending Review</span></td>
+                <td>The transaction has entered the Controller queue and requires validation.</td>
+                <td>Open the detail page and review transaction information, amount, references, and supporting documents.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-on-process">On Process</span></td>
+                <td>The transaction is being reviewed or requires additional documents or clarification.</td>
+                <td>Complete the validation or request additional data from the relevant user or team.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-returned">Returned / Rejected</span></td>
+                <td>The transaction has been returned for correction or rejected due to an issue.</td>
+                <td>Ensure that the reason and corrective action are clearly documented in the transaction notes.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-verified">Verified / Approved</span></td>
+                <td>The transaction has passed Controller validation and approval.</td>
+                <td>Monitor the next stage in Treasury or Transaction History.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="controller-workflow" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">→</div>
+          <div>
+            <h2>Controller Workflow</h2>
+            <p>
+              The Controller workflow ensures that finance transactions are complete,
+              accurate, and properly documented before they move to Treasury.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Receive Transaction</strong>
+            <span>Operational requests enter the Controller review queue.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Validate Data</strong>
+            <span>Review transaction details, amount, vendor, and references.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Review Documents</strong>
+            <span>Confirm invoices, receipts, tax documents, and other attachments.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Approve or Return</strong>
+            <span>Approve valid transactions or return incomplete records for correction.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            The exact workflow, approval level, and available actions can differ
+            depending on the transaction type, amount, entity, department, vessel,
+            and configured role permissions.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Controller User Guide
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Transaction History user guide for the Finance Management System."
+  />
+  <title>Transaction History Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --history: #ea5455;
+      --history-dark: #c83f40;
+      --history-light: #ffeded;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--history-dark);
+      background: var(--history-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #c83f40, #f36f70);
+      box-shadow: 0 14px 32px rgba(234, 84, 85, 0.22);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--history-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--history-dark);
+      border-radius: 9px;
+      background: var(--history-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #823839;
+      border-radius: 5px;
+      background: #ffebeb;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--history-dark);
+      border-radius: 999px;
+      background: var(--history-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #743638;
+      border-left: 4px solid var(--history);
+      border-radius: 0 9px 9px 0;
+      background: var(--history-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--history);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--history);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 190px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-draft {
+      color: #54515f;
+      background: #ecebf0;
+    }
+
+    .status-submitted {
+      color: #825318;
+      background: #fff0d9;
+    }
+
+    .status-review {
+      color: #1d6174;
+      background: #dff9fd;
+    }
+
+    .status-approved {
+      color: #146137;
+      background: #def7e8;
+    }
+
+    .status-released {
+      color: #4d3678;
+      background: #eee8ff;
+    }
+
+    .status-returned {
+      color: #923333;
+      background: #ffe5e5;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .filter-item {
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .filter-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--history-dark);
+      font-size: 13px;
+    }
+
+    .filter-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow,
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Transaction History</span>
+        <a href="#overview">1. Overview</a>
+        <a href="#search-filter">2. Search and Filter</a>
+        <a href="#transaction-detail">3. Transaction Detail</a>
+        <a href="#activity-log">4. Activity Log</a>
+        <a href="#export-history">5. Export History</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#status-reference">Transaction Status</a>
+        <a href="#audit-tips">Audit and Review Tips</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">TRANSACTION HISTORY</span>
+        <h1>Transaction History Guide</h1>
+        <p>
+          Transaction History provides a complete record of finance transactions,
+          workflow activities, approvals, payment progress, and user actions
+          throughout the Finance Management System.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Search Records</strong>
+          <span>Find transactions by document number, vendor, reference, or keyword.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Filter Results</strong>
+          <span>Narrow results by date, status, transaction type, entity, or user.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Review Details</strong>
+          <span>Inspect transaction data, documents, approvals, and payment information.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Audit Trail</strong>
+          <span>Track status changes and activities performed by each user.</span>
+        </div>
+      </section>
+
+      <section id="overview" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Transaction History Overview</h2>
+            <p>
+              This page is used to review completed, ongoing, returned, or rejected
+              finance transactions across Operational, Controller, and Treasury.
+            </p>
+          </div>
+        </div>
+
+        <h3>What can be reviewed</h3>
+        <ul>
+          <li>Purchase Orders and related invoice records.</li>
+          <li>Outstanding payments and payment process records.</li>
+          <li>Payroll, Cash Advance, Allowance, and Liquidation transactions.</li>
+          <li>Approval activities and returned or rejected transactions.</li>
+          <li>Payment release details and bank transaction references.</li>
+          <li>Supporting documents and user activity logs.</li>
+        </ul>
+
+        <h3>How to access Transaction History</h3>
+        <ol>
+          <li>Open the <code>Transaction History</code> menu from the main navigation.</li>
+          <li>The system displays a list of transactions based on your role and access permissions.</li>
+          <li>Use the available search and filter options to find the required record.</li>
+          <li>Click a transaction row to open its detailed history.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Transaction History list page</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/history-list.png"
+            alt="Transaction History list page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Transaction History list screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/history/images/history-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            The transactions displayed in Transaction History may depend on your
+            assigned role, entity access, department access, and system permissions.
+          </p>
+        </div>
+      </section>
+
+      <section id="search-filter" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Search and Filter</h2>
+            <p>
+              Use search and filtering tools to locate a transaction quickly and
+              reduce the number of records shown in the history list.
+            </p>
+          </div>
+        </div>
+
+        <h3>Available filters</h3>
+        <div class="filter-grid">
+          <div class="filter-item">
+            <strong>Date Range</strong>
+            <span>Show transactions created, submitted, approved, or paid within a selected period.</span>
+          </div>
+
+          <div class="filter-item">
+            <strong>Transaction Type</strong>
+            <span>Filter Purchase Order, Payroll, Cash Advance, Allowance, Liquidation, or Payment records.</span>
+          </div>
+
+          <div class="filter-item">
+            <strong>Status</strong>
+            <span>Find transactions based on Draft, Submitted, Approved, Returned, Released, or other statuses.</span>
+          </div>
+
+          <div class="filter-item">
+            <strong>Vendor or Beneficiary</strong>
+            <span>Find transactions related to a specific vendor, supplier, employee, or payment beneficiary.</span>
+          </div>
+
+          <div class="filter-item">
+            <strong>Entity or Department</strong>
+            <span>Limit results to a specific entity, vessel, department, or cost center when available.</span>
+          </div>
+
+          <div class="filter-item">
+            <strong>Reference Number</strong>
+            <span>Search using a PO number, invoice number, payment reference, or transaction ID.</span>
+          </div>
+        </div>
+
+        <h3>How to search for a transaction</h3>
+        <ol>
+          <li>Open <code>Transaction History</code>.</li>
+          <li>Enter a keyword, document number, vendor name, or transaction reference in the search field.</li>
+          <li>Select a date range if the transaction date is known.</li>
+          <li>Choose any additional filters such as status, transaction type, entity, or department.</li>
+          <li>Click <code>Search</code>, <code>Filter</code>, or apply the filter based on the system interface.</li>
+          <li>Open the matching transaction from the filtered result list.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Search and filter controls</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the search and filter screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/history/images/history-filter.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            For faster results, use the most specific identifier available, such as
+            a Purchase Order number, invoice number, payment reference, or unique
+            transaction ID.
+          </p>
+        </div>
+      </section>
+
+      <section id="transaction-detail" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Transaction Detail</h2>
+            <p>
+              The transaction detail page contains the main financial information,
+              references, documents, workflow status, and related activity history.
+            </p>
+          </div>
+        </div>
+
+        <h3>Information commonly available</h3>
+        <ul>
+          <li>Transaction reference number and transaction type.</li>
+          <li>Created date, submitted date, and last updated date.</li>
+          <li>Vendor, beneficiary, entity, department, vessel, or principal information.</li>
+          <li>Amounts, taxes, currency, exchange rate, and payment details.</li>
+          <li>Related Purchase Order, invoice, Cash Advance, or liquidation reference.</li>
+          <li>Attached documents and approval history.</li>
+        </ul>
+
+        <h3>How to review a transaction detail</h3>
+        <ol>
+          <li>Find the desired transaction from the Transaction History list.</li>
+          <li>Click the transaction row or the <code>View Detail</code> action.</li>
+          <li>Review the general information and financial summary.</li>
+          <li>Open related records, such as Purchase Order, Invoice, or Payment, when available.</li>
+          <li>Review attached documents before making any follow-up decision.</li>
+          <li>Check the activity log to understand the full transaction lifecycle.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Transaction detail page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the transaction detail screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/history/images/transaction-detail.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Transaction History is primarily used for review and traceability. If
+            a transaction is already approved or released, changes may be restricted
+            by the workflow and role permission settings.
+          </p>
+        </div>
+      </section>
+
+      <section id="activity-log" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Activity Log and Audit Trail</h2>
+            <p>
+              The activity log records important actions performed during the
+              lifecycle of a transaction, including creation, updates, submissions,
+              approvals, returns, and payment release.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical activity log information</h3>
+        <ul>
+          <li>The user who performed the action.</li>
+          <li>The action type, such as Create, Update, Submit, Approve, Return, Reject, or Release.</li>
+          <li>The date and time of the action.</li>
+          <li>The transaction status before and after the action.</li>
+          <li>Notes, approval comments, or rejection reasons when available.</li>
+        </ul>
+
+        <h3>How to review the activity log</h3>
+        <ol>
+          <li>Open a transaction detail page.</li>
+          <li>Find the <code>Activity Log</code>, <code>Timeline</code>, or <code>Approval History</code> section.</li>
+          <li>Review events from the oldest to the newest action, or use the provided sorting option.</li>
+          <li>Read approval, return, or rejection notes carefully.</li>
+          <li>Use the activity log as a reference when following up with Operational, Controller, or Treasury users.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Transaction activity log or timeline</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the activity log screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/history/images/activity-log.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            Use the audit trail to identify who last updated a transaction, why it
+            was returned or rejected, and which workflow stage is currently pending.
+          </p>
+        </div>
+      </section>
+
+      <section id="export-history" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">05</div>
+          <div>
+            <h2>Export History</h2>
+            <p>
+              If enabled in your system, the export function allows users to download
+              filtered transaction history for reporting, reconciliation, or audit
+              purposes.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to export transaction history</h3>
+        <ol>
+          <li>Open <code>Transaction History</code>.</li>
+          <li>Apply the required date range, transaction type, status, vendor, entity, or department filters.</li>
+          <li>Review the result list to make sure it contains the expected records.</li>
+          <li>Click the <code>Export</code>, <code>Download</code>, or <code>Export Excel</code> button.</li>
+          <li>Select the format if the system provides multiple options, such as Excel, CSV, or PDF.</li>
+          <li>Save the exported file in an approved and secure location.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Export Transaction History action</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the export history screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/history/images/export-history.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Exported files may contain confidential financial and vendor information.
+            Store, share, and dispose of exported files according to company data
+            security policies.
+          </p>
+        </div>
+      </section>
+
+      <section id="status-reference" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Transaction Status Reference</h2>
+            <p>
+              The exact status names may vary by transaction type and workflow
+              configuration, but the following examples describe common statuses.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Typical Next Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status status-draft">Draft</span></td>
+                <td>The transaction has been saved but has not been submitted into the workflow.</td>
+                <td>The creator completes the required data and submits the transaction.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-submitted">Submitted</span></td>
+                <td>The transaction has entered the workflow and is waiting for review or approval.</td>
+                <td>The assigned reviewer, Controller, or approver reviews the transaction.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-review">On Review</span></td>
+                <td>The transaction is being reviewed, validated, or prepared for payment.</td>
+                <td>The responsible team completes the review and sends it to the next workflow stage.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-returned">Returned / Rejected</span></td>
+                <td>The transaction requires correction or has been rejected.</td>
+                <td>The requester reviews the note, corrects the issue, and resubmits when permitted.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-approved">Approved</span></td>
+                <td>The transaction has received the required approval and may proceed.</td>
+                <td>The transaction proceeds to the next stage, such as Treasury payment processing.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-released">Released / Paid</span></td>
+                <td>The payment has been released or recorded as completed.</td>
+                <td>Review the bank reference and retain the record for reconciliation or audit.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="audit-tips" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">✓</div>
+          <div>
+            <h2>Audit and Review Tips</h2>
+            <p>
+              Follow these practices when using Transaction History for monitoring,
+              reconciliation, compliance review, or audit support.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Use References</strong>
+            <span>Search using PO, invoice, payment, or transaction reference numbers.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Check Status</strong>
+            <span>Confirm the latest transaction status before taking follow-up action.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Review Documents</strong>
+            <span>Open and validate supporting documents before approving conclusions.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Read the Audit Trail</strong>
+            <span>Use the activity history to understand changes and workflow decisions.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            When reporting a transaction issue, include the transaction reference,
+            current status, relevant dates, the action history, and screenshots or
+            supporting evidence whenever possible.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Transaction History User Guide
+  </footer>
+</body>
+</html>

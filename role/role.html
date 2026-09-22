@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Role and Permission guide for the Finance Management System."
+  />
+  <title>Role & Permission Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --role: #007bff;
+      --role-dark: #005fc7;
+      --role-light: #e8f3ff;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--role-dark);
+      background: var(--role-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #005fc7, #3598ff);
+      box-shadow: 0 14px 32px rgba(0, 123, 255, 0.22);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--role-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--role-dark);
+      border-radius: 9px;
+      background: var(--role-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #175395;
+      border-radius: 5px;
+      background: #e8f3ff;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--role-dark);
+      border-radius: 999px;
+      background: var(--role-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #1a579c;
+      border-left: 4px solid var(--role);
+      border-radius: 0 9px 9px 0;
+      background: var(--role-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--role);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--role);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 200px;
+      font-weight: 700;
+    }
+
+    .permission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .permission-item {
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .permission-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--role-dark);
+      font-size: 13px;
+    }
+
+    .permission-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-operational {
+      color: #825318;
+      background: #fff0d9;
+    }
+
+    .badge-controller {
+      color: #1d6174;
+      background: #dff9fd;
+    }
+
+    .badge-treasury {
+      color: #146137;
+      background: #def7e8;
+    }
+
+    .badge-admin {
+      color: #4d3678;
+      background: #eee8ff;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .permission-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow,
+      .permission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Role & Permission</span>
+        <a href="#overview">1. Role Overview</a>
+        <a href="#role-list">2. Role List</a>
+        <a href="#create-role">3. Create Role</a>
+        <a href="#edit-role">4. Edit Role</a>
+        <a href="#permissions">5. Assign Permissions</a>
+        <a href="#menu-access">6. Menu Access</a>
+        <a href="#assign-user">7. Assign Role to User</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#role-examples">Role Examples</a>
+        <a href="#security-guidelines">Security Guidelines</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">ROLE & PERMISSION MODULE</span>
+        <h1>Role & Permission Guide</h1>
+        <p>
+          The Role & Permission module is used to define user roles, manage
+          permissions, control access to menus and actions, and support secure
+          segregation of duties in the Finance Management System.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Roles</strong>
+          <span>Create job-based roles such as Operational, Controller, Treasury, and Administrator.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Permissions</strong>
+          <span>Control which pages, data, and actions are available to each role.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Menu Access</strong>
+          <span>Show or hide specific application menus based on assigned permissions.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Segregation of Duties</strong>
+          <span>Separate transaction creation, review, approval, and payment release responsibilities.</span>
+        </div>
+      </section>
+
+      <section id="overview" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Role Overview</h2>
+            <p>
+              A role is a collection of permissions assigned to users who perform
+              similar responsibilities within the Finance Management System.
+            </p>
+          </div>
+        </div>
+
+        <h3>Why roles are important</h3>
+        <ul>
+          <li>They simplify access administration for users with similar responsibilities.</li>
+          <li>They control which modules and records users can access.</li>
+          <li>They limit sensitive actions, such as approving or releasing payments.</li>
+          <li>They support auditability and segregation of duties.</li>
+          <li>They reduce the risk of unauthorized changes to financial data.</li>
+        </ul>
+
+        <h3>Recommended role management flow</h3>
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Define Role</strong>
+            <span>Create a role based on a job function or responsibility.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Configure Permissions</strong>
+            <span>Select accessible menus, actions, and data scopes.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Assign to Users</strong>
+            <span>Apply the role to the users who need that access.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Review Regularly</strong>
+            <span>Review access after job, department, or policy changes.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Role and permission administration should be limited to authorized
+            system administrators. Incorrect permission settings can expose
+            sensitive finance data or enable unauthorized transaction actions.
+          </p>
+        </div>
+      </section>
+
+      <section id="role-list" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Role List</h2>
+            <p>
+              The Role List displays all roles configured in the system and provides
+              access to review, edit, or manage each role’s permission settings.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical actions from the Role List</h3>
+        <ul>
+          <li>Search for a role by name or keyword.</li>
+          <li>Review the list of users assigned to a role.</li>
+          <li>Open role details and permission settings.</li>
+          <li>Create a new role.</li>
+          <li>Edit an existing role.</li>
+          <li>Deactivate a role when it is no longer needed, if supported.</li>
+        </ul>
+
+        <h3>How to find a role</h3>
+        <ol>
+          <li>Open the <code>Role</code> menu.</li>
+          <li>Use the search field to enter a role name.</li>
+          <li>Use filters if the system supports role status or module filters.</li>
+          <li>Select a role from the result list to view its details.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Role List page</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/role-list.png"
+            alt="Role list page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Role List screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/role/images/role-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="create-role" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Create Role</h2>
+            <p>
+              Create a new role when a job function requires a unique combination
+              of menu access, actions, approval authority, or data scope.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to create a role</h3>
+        <ol>
+          <li>Open the <code>Role</code> menu.</li>
+          <li>Click <code>Add Role</code>, <code>Create</code>, or the equivalent action.</li>
+          <li>Enter a clear and descriptive role name.</li>
+          <li>Add a description that explains the business purpose of the role.</li>
+          <li>Select the required permissions for menus, pages, and actions.</li>
+          <li>Set the role status to active if the role is ready to be assigned.</li>
+          <li>Click <code>Save</code>.</li>
+        </ol>
+
+        <h3>Recommended role naming examples</h3>
+        <ul>
+          <li><code>Operational Staff</code></li>
+          <li><code>Operational Approver</code></li>
+          <li><code>Controller Reviewer</code></li>
+          <li><code>Controller Approver</code></li>
+          <li><code>Treasury Processor</code></li>
+          <li><code>Treasury Approver</code></li>
+          <li><code>Master Data Administrator</code></li>
+          <li><code>System Administrator</code></li>
+        </ul>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Create Role form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Create Role form screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/role/images/create-role.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Avoid creating duplicate roles with overlapping purposes. Before
+            creating a new role, review existing roles to determine whether one can
+            be reused or adjusted safely.
+          </p>
+        </div>
+      </section>
+
+      <section id="edit-role" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Edit Role</h2>
+            <p>
+              Edit a role when permissions, menu access, approval authority, or
+              business responsibilities need to be updated.
+            </p>
+          </div>
+        </div>
+
+        <h3>When to edit a role</h3>
+        <ul>
+          <li>A new finance module or feature is introduced.</li>
+          <li>Business workflow or approval requirements change.</li>
+          <li>A role has too much or too little access.</li>
+          <li>An existing permission needs to be corrected.</li>
+          <li>Organizational responsibilities have changed.</li>
+        </ul>
+
+        <h3>How to edit a role</h3>
+        <ol>
+          <li>Open the <code>Role</code> menu.</li>
+          <li>Find and select the role to update.</li>
+          <li>Click <code>Edit</code>.</li>
+          <li>Update the role name, description, permissions, or status as needed.</li>
+          <li>Review all changes carefully before saving.</li>
+          <li>Click <code>Save Changes</code>.</li>
+          <li>Review users assigned to the role after changes are applied.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Edit Role and permissions</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Edit Role screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/role/images/edit-role.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Changes to a role may affect all users currently assigned to that role.
+            Review the user assignment list before applying significant permission
+            changes.
+          </p>
+        </div>
+      </section>
+
+      <section id="permissions" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">05</div>
+          <div>
+            <h2>Assign Permissions</h2>
+            <p>
+              Permissions define the actions a role can perform in each module,
+              such as viewing, creating, editing, approving, releasing, or exporting records.
+            </p>
+          </div>
+        </div>
+
+        <h3>Common permission types</h3>
+        <div class="permission-grid">
+          <div class="permission-item">
+            <strong>View</strong>
+            <span>Allows users to open a menu, page, list, or record detail.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Create</strong>
+            <span>Allows users to create new records, transactions, or master data.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Update</strong>
+            <span>Allows users to edit existing records when the workflow permits changes.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Delete</strong>
+            <span>Allows users to delete records when deletion is permitted by system rules.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Approve</strong>
+            <span>Allows users to approve, return, or reject transactions in approval workflows.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Release Payment</strong>
+            <span>Allows authorized users to perform the final payment release action.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Export</strong>
+            <span>Allows users to download transaction, report, or master data records.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Manage Users</strong>
+            <span>Allows users to create, update, deactivate, or reset user accounts.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Manage Roles</strong>
+            <span>Allows users to configure roles and permission assignments.</span>
+          </div>
+        </div>
+
+        <h3>How to assign permissions to a role</h3>
+        <ol>
+          <li>Open the <code>Role</code> menu.</li>
+          <li>Select the role you want to configure.</li>
+          <li>Click <code>Edit</code> or open the role permission settings.</li>
+          <li>Select the required permission categories.</li>
+          <li>Enable only the menu and action permissions required by the role.</li>
+          <li>Review sensitive permissions such as approval, payment release, user management, and role management.</li>
+          <li>Click <code>Save</code>.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Permission configuration</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Permission configuration screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/role/images/role-permissions.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Grant <code>Approve</code>, <code>Release Payment</code>,
+            <code>Manage Users</code>, and <code>Manage Roles</code> permissions
+            only to users with explicit authorization. These permissions affect
+            financial controls and system security.
+          </p>
+        </div>
+      </section>
+
+      <section id="menu-access" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">06</div>
+          <div>
+            <h2>Menu Access</h2>
+            <p>
+              Menu access controls whether a role can see and open specific modules
+              in the application navigation.
+            </p>
+          </div>
+        </div>
+
+        <h3>Finance Management System menu areas</h3>
+        <div class="permission-grid">
+          <div class="permission-item">
+            <strong>Dashboard</strong>
+            <span>Access to summary cards, notifications, charts, and role-relevant information.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Operational</strong>
+            <span>Access to Purchase Orders, Cash Advances, Payroll, Allowances, Liquidation, and related approvals.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Controller</strong>
+            <span>Access to document review, invoice confirmation, verification, and controller approvals.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Treasury</strong>
+            <span>Access to Payment List, Payment Process, Approval, and Payment Release.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Transaction History</strong>
+            <span>Access to historical transaction records, audit trails, and activity logs.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Master Data</strong>
+            <span>Access to Vendors, Principals, Vessels, Entities, Banks, Currencies, Taxes, and other references.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>User Management</strong>
+            <span>Access to user account creation, updates, password resets, and status changes.</span>
+          </div>
+
+          <div class="permission-item">
+            <strong>Role Management</strong>
+            <span>Access to role creation, editing, and permission configuration.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            A user may need both a menu-level permission and an action-level
+            permission. For example, a user may view the Treasury menu but not have
+            permission to release payments.
+          </p>
+        </div>
+      </section>
+
+      <section id="assign-user" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">07</div>
+          <div>
+            <h2>Assign Role to User</h2>
+            <p>
+              After a role is configured, assign it to the appropriate users through
+              the User Management module.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to assign a role to a user</h3>
+        <ol>
+          <li>Open the <code>User</code> menu.</li>
+          <li>Search for and select the target user account.</li>
+          <li>Click <code>Edit</code>.</li>
+          <li>Find the <code>Role</code> or <code>Assigned Roles</code> section.</li>
+          <li>Select the required role.</li>
+          <li>Assign any additional data scope, such as entity, department, vessel, or approval limit, if available.</li>
+          <li>Save the user changes.</li>
+          <li>Ask the user to sign out and sign in again if the system applies new permissions only after a new session starts.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Assign role to user</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Assign Role to User screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/role/images/assign-role-user.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            After assigning a role, test the user’s access to confirm that the
+            expected menus and actions are available and that restricted actions
+            remain unavailable.
+          </p>
+        </div>
+      </section>
+
+      <section id="role-examples" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Role Examples</h2>
+            <p>
+              The following examples illustrate how roles can be separated across
+              the Finance Management System. Adjust permissions according to your
+              organization’s policies and approval matrix.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Role Example</th>
+                <th>Primary Access</th>
+                <th>Typical Restrictions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="role-badge badge-operational">Operational Staff</span></td>
+                <td>Create and submit Purchase Orders, Cash Advances, Payroll, Allowances, and Liquidation records.</td>
+                <td>Should not approve their own transactions or release payments.</td>
+              </tr>
+              <tr>
+                <td><span class="role-badge badge-controller">Controller Reviewer</span></td>
+                <td>Review documents, confirm invoices, validate transactions, and return incomplete requests.</td>
+                <td>Should not create source transactions that they are responsible for reviewing.</td>
+              </tr>
+              <tr>
+                <td><span class="role-badge badge-treasury">Treasury Processor</span></td>
+                <td>View payment requests and prepare payment instructions.</td>
+                <td>Should not release payments unless specifically authorized.</td>
+              </tr>
+              <tr>
+                <td><span class="role-badge badge-treasury">Treasury Approver</span></td>
+                <td>Approve payment instructions within the assigned approval authority.</td>
+                <td>Should not approve payment requests that exceed their approval limit.</td>
+              </tr>
+              <tr>
+                <td><span class="role-badge badge-admin">System Administrator</span></td>
+                <td>Manage users, roles, permissions, and system-level configuration.</td>
+                <td>Should not perform routine finance approval or payment release actions unless specifically authorized.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="security-guidelines" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">✓</div>
+          <div>
+            <h2>Role and Permission Security Guidelines</h2>
+            <p>
+              Follow these controls to maintain secure role administration and
+              reduce the risk of unauthorized financial actions.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Apply Least Privilege</strong>
+            <span>Grant only the access necessary for the user’s current responsibilities.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Separate Duties</strong>
+            <span>Separate transaction creation, review, approval, and payment release roles.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Review Periodically</strong>
+            <span>Review roles and permissions regularly, especially after organization changes.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Test Changes</strong>
+            <span>Verify new or changed roles using a test user before assigning them broadly.</span>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Do not grant a single user unrestricted access to create, approve, and
+            release the same payment unless this is explicitly authorized by company
+            policy and supported by compensating controls.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Role & Permission Guide
+  </footer>
+</body>
+</html>

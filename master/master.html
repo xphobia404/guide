@@ -1,0 +1,1326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Master Data user guide for the Finance Management System."
+  />
+  <title>Master Data Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --master: #82868b;
+      --master-dark: #5f6368;
+      --master-light: #f0f0f2;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--master-dark);
+      background: var(--master-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #5f6368, #989da2);
+      box-shadow: 0 14px 32px rgba(95, 99, 104, 0.22);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--master-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--master-dark);
+      border-radius: 9px;
+      background: var(--master-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #4d5156;
+      border-radius: 5px;
+      background: #eeeeef;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--master-dark);
+      border-radius: 999px;
+      background: var(--master-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #4f5358;
+      border-left: 4px solid var(--master);
+      border-radius: 0 9px 9px 0;
+      background: var(--master-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--master);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--master);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 190px;
+      font-weight: 700;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .data-item {
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .data-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--master-dark);
+      font-size: 13px;
+    }
+
+    .data-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .data-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow,
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Master Data</span>
+        <a href="#vendors">1. Vendors</a>
+        <a href="#principals">2. Principals</a>
+        <a href="#vessels">3. Vessels</a>
+        <a href="#entities">4. Entities</a>
+        <a href="#departments">5. Departments</a>
+        <a href="#banks">6. Bank</a>
+        <a href="#bank-accounts">7. Bank Accounts</a>
+        <a href="#currencies">8. Currencies</a>
+        <a href="#budget-accounts">9. Budget Account</a>
+        <a href="#taxes">10. Taxes</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#common-actions">Common Actions</a>
+        <a href="#data-governance">Data Governance</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">MASTER DATA MODULE</span>
+        <h1>Master Data User Guide</h1>
+        <p>
+          The Master Data module manages the reference data used throughout the
+          Finance Management System, including vendors, entities, bank details,
+          currencies, budget accounts, taxes, and operational references.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Reference Data</strong>
+          <span>Maintain consistent reference values across finance transactions.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Transaction Accuracy</strong>
+          <span>Ensure correct vendor, bank, entity, currency, and tax selection.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Access Control</strong>
+          <span>Master Data updates should be limited to authorized users.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Data Consistency</strong>
+          <span>Keep active records accurate to prevent errors in downstream workflows.</span>
+        </div>
+      </section>
+
+      <section id="vendors" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Vendors</h2>
+            <p>
+              The Vendors menu is used to manage suppliers, service providers,
+              contractors, and other payees used in Purchase Orders, invoices,
+              and payment transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical vendor information</h3>
+        <ul>
+          <li>Vendor code and vendor name.</li>
+          <li>Address, email, phone number, and contact person.</li>
+          <li>Tax identification information where applicable.</li>
+          <li>Vendor status, such as Active or Inactive.</li>
+          <li>Related bank account information for payment purposes.</li>
+        </ul>
+
+        <h3>How to add a vendor</h3>
+        <ol>
+          <li>Open <code>Master Data → Vendors</code>.</li>
+          <li>Click <code>Add Vendor</code> or <code>Create</code>.</li>
+          <li>Enter the vendor name, code, address, and contact details.</li>
+          <li>Enter tax information and bank information when required.</li>
+          <li>Set the vendor status to active if the vendor can be used in new transactions.</li>
+          <li>Click <code>Save</code>.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Vendors list or vendor form</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/vendors.png"
+            alt="Master Data Vendors page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Vendors screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/vendors.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Verify the vendor name, tax details, and bank account information
+            before activating a vendor. Incorrect vendor information can affect
+            invoice validation and payment processing.
+          </p>
+        </div>
+      </section>
+
+      <section id="principals" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Principals</h2>
+            <p>
+              The Principals menu manages principal or main business-party
+              information used as a reference in operational and financial
+              transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to manage principals</h3>
+        <ol>
+          <li>Open <code>Master Data → Principals</code>.</li>
+          <li>Click <code>Add</code> to create a new principal record.</li>
+          <li>Enter the principal name, code, contact information, and related details.</li>
+          <li>Set the record status based on whether it may be used in new transactions.</li>
+          <li>Save the record and verify it appears in the principal list.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Principals page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Principals screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/principals.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vessels" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Vessels</h2>
+            <p>
+              The Vessels menu manages vessel records used to classify operational
+              expenses, Purchase Orders, Cash Advances, and other vessel-related
+              transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical vessel information</h3>
+        <ul>
+          <li>Vessel name and vessel code.</li>
+          <li>Principal, entity, or operational group association.</li>
+          <li>Operational status.</li>
+          <li>Other business references required by the system.</li>
+        </ul>
+
+        <h3>How to add a vessel</h3>
+        <ol>
+          <li>Open <code>Master Data → Vessels</code>.</li>
+          <li>Click <code>Add Vessel</code>.</li>
+          <li>Enter the vessel name, code, and required reference information.</li>
+          <li>Select the associated principal or entity if available.</li>
+          <li>Set the vessel status and save the record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Vessels page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Vessels screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/vessels.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="entities" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Entities</h2>
+            <p>
+              The Entities menu manages legal entities, companies, business units,
+              or organizations used as financial transaction references.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to manage entities</h3>
+        <ol>
+          <li>Open <code>Master Data → Entities</code>.</li>
+          <li>Click <code>Add Entity</code>.</li>
+          <li>Enter the entity name, code, registered address, and required tax details.</li>
+          <li>Assign related bank accounts, currencies, or departments if supported.</li>
+          <li>Save the entity record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Entities page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Entities screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/entities.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="departments" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">05</div>
+          <div>
+            <h2>Departments</h2>
+            <p>
+              The Departments menu manages organizational departments or cost
+              centers used to classify and control finance transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to manage departments</h3>
+        <ol>
+          <li>Open <code>Master Data → Departments</code>.</li>
+          <li>Click <code>Add Department</code>.</li>
+          <li>Enter the department name and department code.</li>
+          <li>Select the related entity or parent department if applicable.</li>
+          <li>Set the active status and save the record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Departments page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Departments screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/departments.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="banks" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">06</div>
+          <div>
+            <h2>Bank</h2>
+            <p>
+              The Bank menu maintains the list of banks available for company,
+              vendor, employee, or other beneficiary bank account records.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to add a bank</h3>
+        <ol>
+          <li>Open <code>Master Data → Bank</code>.</li>
+          <li>Click <code>Add Bank</code>.</li>
+          <li>Enter the bank name, bank code, SWIFT code, or other required identifiers.</li>
+          <li>Enter branch or country information if required by the system.</li>
+          <li>Save the bank record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Bank page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Bank screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/banks.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bank-accounts" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">07</div>
+          <div>
+            <h2>Bank Accounts</h2>
+            <p>
+              The Bank Accounts menu manages company, vendor, employee, or other
+              beneficiary bank account details used in payment transactions.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical bank account information</h3>
+        <ul>
+          <li>Account holder name.</li>
+          <li>Bank name and bank branch.</li>
+          <li>Bank account number.</li>
+          <li>Currency of the bank account.</li>
+          <li>Related vendor, entity, employee, or beneficiary.</li>
+          <li>Account status and verification status where applicable.</li>
+        </ul>
+
+        <h3>How to add a bank account</h3>
+        <ol>
+          <li>Open <code>Master Data → Bank Accounts</code>.</li>
+          <li>Click <code>Add Bank Account</code>.</li>
+          <li>Select the related owner, such as a vendor or entity.</li>
+          <li>Select the bank and enter the account holder name and account number.</li>
+          <li>Select the applicable currency.</li>
+          <li>Review the data carefully and save the record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Bank Accounts page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Bank Accounts screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/bank-accounts.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Bank account data is sensitive and directly affects payments. Always
+            verify the bank name, account holder name, account number, and currency
+            before creating, editing, or activating a bank account record.
+          </p>
+        </div>
+      </section>
+
+      <section id="currencies" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">08</div>
+          <div>
+            <h2>Currencies</h2>
+            <p>
+              The Currencies menu manages the currency reference list used in
+              transactions, invoices, bank accounts, budgets, and payments.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to manage currencies</h3>
+        <ol>
+          <li>Open <code>Master Data → Currencies</code>.</li>
+          <li>Click <code>Add Currency</code> if a required currency is not available.</li>
+          <li>Enter the currency code, such as IDR, USD, SGD, or EUR.</li>
+          <li>Enter the currency name and symbol if required.</li>
+          <li>Set the currency status and save the record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Currencies page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Currencies screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/currencies.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="budget-accounts" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">09</div>
+          <div>
+            <h2>Budget Account</h2>
+            <p>
+              The Budget Account menu manages budget classifications or account
+              references used to categorize, control, and report financial costs.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to manage budget accounts</h3>
+        <ol>
+          <li>Open <code>Master Data → Budget Account</code>.</li>
+          <li>Click <code>Add Budget Account</code>.</li>
+          <li>Enter the budget account code and account name.</li>
+          <li>Select a parent account or category if the system supports a hierarchy.</li>
+          <li>Assign the related entity, department, or other reference if required.</li>
+          <li>Set the active status and save the record.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Budget Account page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Budget Account screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/budget-accounts.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="taxes" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">10</div>
+          <div>
+            <h2>Taxes</h2>
+            <p>
+              The Taxes menu manages tax references used to calculate and classify
+              taxes in Purchase Orders, invoices, payment requests, and reports.
+            </p>
+          </div>
+        </div>
+
+        <h3>Typical tax information</h3>
+        <ul>
+          <li>Tax name and tax code.</li>
+          <li>Tax rate or percentage.</li>
+          <li>Tax type, such as input, output, withholding, or other tax categories.</li>
+          <li>Effective date or status.</li>
+          <li>Related accounting or budget reference if available.</li>
+        </ul>
+
+        <h3>How to add a tax record</h3>
+        <ol>
+          <li>Open <code>Master Data → Taxes</code>.</li>
+          <li>Click <code>Add Tax</code>.</li>
+          <li>Enter the tax code, tax name, and tax rate.</li>
+          <li>Select the tax type or applicable category.</li>
+          <li>Set the tax record status and save it.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Taxes page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Taxes screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/master/images/taxes.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Tax configuration affects transaction totals and financial reporting.
+            Do not change tax rates or deactivate tax records without confirming
+            the applicable finance and tax policy.
+          </p>
+        </div>
+      </section>
+
+      <section id="common-actions" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Common Master Data Actions</h2>
+            <p>
+              Most Master Data menus provide similar actions for creating,
+              reviewing, editing, activating, and deactivating reference records.
+            </p>
+          </div>
+        </div>
+
+        <div class="data-grid">
+          <div class="data-item">
+            <strong>Add</strong>
+            <span>Create a new reference record that can be used in future transactions.</span>
+          </div>
+
+          <div class="data-item">
+            <strong>View Detail</strong>
+            <span>Review complete record details, related information, and current status.</span>
+          </div>
+
+          <div class="data-item">
+            <strong>Edit</strong>
+            <span>Update an existing record when information changes or needs correction.</span>
+          </div>
+
+          <div class="data-item">
+            <strong>Activate / Deactivate</strong>
+            <span>Control whether a record can be selected in new transactions.</span>
+          </div>
+
+          <div class="data-item">
+            <strong>Search and Filter</strong>
+            <span>Find specific records using a name, code, category, status, or related reference.</span>
+          </div>
+
+          <div class="data-item">
+            <strong>Export</strong>
+            <span>Download data for review, reconciliation, migration, or audit if the feature is enabled.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            When a record has already been used in financial transactions, it is
+            generally safer to deactivate it rather than delete it. This preserves
+            historical transaction integrity.
+          </p>
+        </div>
+      </section>
+
+      <section id="data-governance" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">✓</div>
+          <div>
+            <h2>Master Data Governance</h2>
+            <p>
+              Follow these guidelines to maintain clean, accurate, and secure
+              reference data across the Finance Management System.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Verify Before Saving</strong>
+            <span>Check names, codes, values, and required references before creating records.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Avoid Duplicates</strong>
+            <span>Search existing records before adding new vendors, accounts, entities, or codes.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Use Status Control</strong>
+            <span>Deactivate obsolete records instead of deleting records used in transactions.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Protect Sensitive Data</strong>
+            <span>Restrict access to bank accounts, tax data, and financial references to authorized users.</span>
+          </div>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            Accurate Master Data improves transaction quality, reduces payment
+            errors, supports reliable reports, and makes approval and audit
+            processes easier to manage.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Master Data User Guide
+  </footer>
+</body>
+</html>

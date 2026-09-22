@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Operational module user guide for the Finance Management System."
+  />
+  <title>Operational Guide | Finance Management System</title>
+
+  <style>
+    :root {
+      --primary: #7367f0;
+      --primary-dark: #5b50ce;
+      --primary-light: #f1efff;
+
+      --operational: #ff9f43;
+      --operational-dark: #e78a2f;
+      --operational-light: #fff4e8;
+
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #2f2b3d;
+      --muted: #6f6b7d;
+      --border: #e7e5ed;
+
+      --success: #28c76f;
+      --warning: #ff9f43;
+      --danger: #ea5455;
+      --info: #00cfe8;
+
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: min(1440px, calc(100% - 48px));
+      min-height: 68px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #978dfa);
+      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-outline {
+      color: var(--primary);
+      border: 1px solid #d8d4fb;
+      background: #ffffff;
+    }
+
+    .button-outline:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 28px;
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 30px 0 62px;
+    }
+
+    aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      padding: 16px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    aside::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    aside::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cfccd8;
+    }
+
+    .sidebar-heading {
+      display: block;
+      margin: 3px 9px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.75px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-home {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      padding: 9px 10px;
+      color: var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sidebar-home:hover {
+      background: #e8e5ff;
+    }
+
+    .sidebar-title {
+      display: block;
+      margin: 16px 9px 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    aside nav a {
+      display: block;
+      margin: 2px 0;
+      padding: 8px 10px;
+      color: var(--muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    aside nav a:hover {
+      color: var(--operational-dark);
+      background: var(--operational-light);
+    }
+
+    .intro {
+      padding: 30px;
+      overflow: hidden;
+      color: #ffffff;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
+        linear-gradient(135deg, #f48b2f, #ffaf5d);
+      box-shadow: 0 14px 32px rgba(255, 159, 67, 0.22);
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      padding: 5px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .intro h1 {
+      margin: 14px 0 9px;
+      font-size: clamp(28px, 4vw, 36px);
+      line-height: 1.2;
+    }
+
+    .intro p {
+      max-width: 790px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .overview-item {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+
+    .overview-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--operational-dark);
+      font-size: 14px;
+    }
+
+    .overview-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .guide-section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
+    }
+
+    .guide-section[id] {
+      scroll-margin-top: 94px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: var(--operational-dark);
+      border-radius: 9px;
+      background: var(--operational-light);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h3 {
+      margin: 24px 0 9px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 6px;
+      color: #5b4a33;
+      border-radius: 5px;
+      background: #fff1e2;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88em;
+    }
+
+    .screenshot-box {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #d6d2df;
+      border-radius: 12px;
+      background: #fafafd;
+    }
+
+    .screenshot-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .screenshot-label span:last-child {
+      padding: 3px 8px;
+      color: var(--operational-dark);
+      border-radius: 999px;
+      background: var(--operational-light);
+      font-size: 11px;
+    }
+
+    .image-placeholder {
+      display: grid;
+      min-height: 235px;
+      place-items: center;
+      padding: 22px;
+      color: #9b97a6;
+      border-radius: 9px;
+      background:
+        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #7b7688;
+      font-size: 14px;
+    }
+
+    .image-placeholder small {
+      display: block;
+      max-width: 520px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-placeholder code {
+      display: inline-block;
+      margin-top: 7px;
+      color: #6f6b7d;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .image-preview {
+      display: block;
+      width: 100%;
+      max-height: 680px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+    }
+
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 19px;
+      padding: 14px 16px;
+      color: #63441d;
+      border-left: 4px solid var(--operational);
+      border-radius: 0 9px 9px 0;
+      background: var(--operational-light);
+      font-size: 14px;
+    }
+
+    .note-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 23px;
+      height: 23px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--operational);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .note.warning {
+      color: #754712;
+      border-left-color: var(--warning);
+      background: #fff7ed;
+    }
+
+    .note.warning .note-icon {
+      background: var(--warning);
+    }
+
+    .note.success {
+      color: #155d34;
+      border-left-color: var(--success);
+      background: #eafaf1;
+    }
+
+    .note.success .note-icon {
+      background: var(--success);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-item {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fcfcfe;
+    }
+
+    .flow-item-number {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: #ffffff;
+      border-radius: 50%;
+      background: var(--operational);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .flow-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .status-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--text);
+      background: #f8f7fb;
+      font-size: 12px;
+    }
+
+    td:first-child {
+      width: 175px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-draft {
+      color: #54515f;
+      background: #ecebf0;
+    }
+
+    .status-submitted {
+      color: #825318;
+      background: #fff0d9;
+    }
+
+    .status-approved {
+      color: #146137;
+      background: #def7e8;
+    }
+
+    .status-returned {
+      color: #923333;
+      background: #ffe5e5;
+    }
+
+    footer {
+      padding: 25px 20px 35px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .overview,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-content,
+      .layout {
+        width: min(100% - 32px, 1440px);
+      }
+
+      .topbar-actions .button-outline {
+        display: none;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .layout {
+        padding-top: 18px;
+      }
+
+      .intro,
+      .guide-section {
+        padding: 20px;
+      }
+
+      .overview,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .image-placeholder {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-logo">F</div>
+        <span>Finance Management System</span>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="../userguide.html" class="button button-outline">
+          ← All Guides
+        </a>
+
+        <a href="/" class="button button-primary">
+          Open Application
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <span class="sidebar-heading">Guide Navigation</span>
+
+      <a href="../userguide.html" class="sidebar-home">
+        <span>⌂</span>
+        <span>User Guide Home</span>
+      </a>
+
+      <nav>
+        <span class="sidebar-title">Operational</span>
+        <a href="#purchase-order">1. Purchase Order</a>
+        <a href="#outstanding-payment">2. Outstanding Payment</a>
+        <a href="#payroll">3. Payroll</a>
+        <a href="#cash-advance">4. Cash Advance</a>
+        <a href="#allowance">5. Allowance</a>
+        <a href="#liquidation">6. Liquidation</a>
+        <a href="#approval">7. Approval</a>
+
+        <span class="sidebar-title">Additional Information</span>
+        <a href="#transaction-status">Transaction Status</a>
+        <a href="#operational-workflow">Operational Workflow</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="intro">
+        <span class="intro-tag">OPERATIONAL MODULE</span>
+        <h1>Operational User Guide</h1>
+        <p>
+          The Operational module is used to create, complete, and submit operational
+          finance transactions before they move through Controller review, approval,
+          and Treasury payment processing.
+        </p>
+      </section>
+
+      <section class="overview">
+        <div class="overview-item">
+          <strong>Purchase Order</strong>
+          <span>Create procurement documents for goods and services.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Expense Requests</strong>
+          <span>Manage Payroll, Cash Advance, and Allowance requests.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Liquidation</strong>
+          <span>Record actual expense accountability for operational funds.</span>
+        </div>
+
+        <div class="overview-item">
+          <strong>Approval</strong>
+          <span>Review and act on transactions based on the approval workflow.</span>
+        </div>
+      </section>
+
+      <section id="purchase-order" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">01</div>
+          <div>
+            <h2>Purchase Order</h2>
+            <p>
+              Purchase Order is used to create, save, and submit procurement requests
+              for goods or services.
+            </p>
+          </div>
+        </div>
+
+        <h3>Purpose</h3>
+        <p>
+          Purchase Orders help Operational users document procurement needs in a
+          structured way, including vendor details, goods or services, quantity,
+          amount, currency, taxes, entity, vessel, department, and supporting documents.
+        </p>
+
+        <h3>How to create a Purchase Order</h3>
+        <ol>
+          <li>Open <code>Operational → Purchase Order</code>.</li>
+          <li>Click <code>Add</code>, <code>Create</code>, or <code>New Purchase Order</code>.</li>
+          <li>Select the appropriate vendor.</li>
+          <li>Enter main information such as PO date, entity, vessel, department, and description.</li>
+          <li>Add goods or service line items with quantities and unit prices.</li>
+          <li>Review the amount, currency, taxes, and Purchase Order total.</li>
+          <li>Upload supporting documents if required.</li>
+          <li>Click <code>Save Draft</code> if the request is not complete, or <code>Submit</code> to send it into the workflow.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot 1 — Purchase Order list page</span>
+            <span>Add image</span>
+          </div>
+
+          <!--
+          Replace this placeholder with:
+          <img
+            src="./images/purchase-order-list.png"
+            alt="Purchase Order list page"
+            class="image-preview"
+          />
+          -->
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Purchase Order list screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/purchase-order-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot 2 — Create Purchase Order form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Purchase Order form screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/purchase-order-form.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Verify the vendor, item details, amount, taxes, currency, and supporting
+            documents before submitting the Purchase Order. Editing may be restricted
+            after the request enters the approval workflow.
+          </p>
+        </div>
+      </section>
+
+      <section id="outstanding-payment" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">02</div>
+          <div>
+            <h2>Outstanding Payment</h2>
+            <p>
+              Outstanding Payment is used to monitor transaction requests or invoices
+              that have not yet been fully processed or paid.
+            </p>
+          </div>
+        </div>
+
+        <h3>Key Functions</h3>
+        <ul>
+          <li>View transactions that are still unpaid or pending further action.</li>
+          <li>Search by document number, vendor, reference number, or period.</li>
+          <li>Monitor transaction status from submission through payment processing.</li>
+          <li>Identify transactions delayed by incomplete documents or pending approvals.</li>
+        </ul>
+
+        <h3>How to use Outstanding Payment</h3>
+        <ol>
+          <li>Open <code>Operational → Outstanding Payment</code>.</li>
+          <li>Use filters such as date, status, vendor, or document reference.</li>
+          <li>Select a transaction to view its details.</li>
+          <li>Review the current status, payment amount, attachments, and notes.</li>
+          <li>Provide corrections or upload additional documents if the transaction was returned.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Outstanding Payment page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Outstanding Payment screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/outstanding-payment.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Monitor transactions with upcoming due dates closely. Missing invoices,
+            incorrect bank information, or incomplete approvals can delay payment.
+          </p>
+        </div>
+      </section>
+
+      <section id="payroll" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">03</div>
+          <div>
+            <h2>Payroll</h2>
+            <p>
+              Payroll is used to submit salary-related, honorarium, incentive, or
+              other payroll payment requests.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to create a Payroll request</h3>
+        <ol>
+          <li>Open <code>Operational → Payroll</code>.</li>
+          <li>Click <code>Add Payroll</code>.</li>
+          <li>Select the payroll period.</li>
+          <li>Enter recipient information, payment components, and payment amounts.</li>
+          <li>Add descriptions and attach supporting documents when required.</li>
+          <li>Review the total amount before saving.</li>
+          <li>Click <code>Submit</code> to send the request for Controller review.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Payroll request form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Payroll request screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/payroll-form.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Ensure that the payroll period, recipient data, and total amount are
+            correct and not duplicated before submission.
+          </p>
+        </div>
+      </section>
+
+      <section id="cash-advance" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">04</div>
+          <div>
+            <h2>Cash Advance</h2>
+            <p>
+              Cash Advance is used to request operational funds in advance before
+              actual expenses are incurred.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to create a Cash Advance request</h3>
+        <ol>
+          <li>Open <code>Operational → Cash Advance</code>.</li>
+          <li>Click <code>Add Cash Advance</code>.</li>
+          <li>Enter the business purpose and operational requirement description.</li>
+          <li>Enter the requested amount, currency, and required funding date.</li>
+          <li>Select the department, entity, vessel, or budget account if applicable.</li>
+          <li>Upload supporting documents, such as quotations or expense estimates.</li>
+          <li>Save as draft or click <code>Submit</code> to send the request for review.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Cash Advance request form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Cash Advance screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/cash-advance-form.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Cash Advances that have been paid normally require accountability through
+            the Liquidation menu. Keep all receipts and proof of expenses for the
+            liquidation process.
+          </p>
+        </div>
+      </section>
+
+      <section id="allowance" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">05</div>
+          <div>
+            <h2>Allowance</h2>
+            <p>
+              Allowance is used to request allowances or operational support costs
+              based on company policy and business requirements.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to create an Allowance request</h3>
+        <ol>
+          <li>Open <code>Operational → Allowance</code>.</li>
+          <li>Click <code>Add Allowance</code>.</li>
+          <li>Select or enter the allowance recipient.</li>
+          <li>Specify the allowance type, period, and requested amount.</li>
+          <li>Add the department, entity, vessel, or cost reference if applicable.</li>
+          <li>Upload supporting documents if required.</li>
+          <li>Click <code>Submit</code> to send the request into the workflow.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Allowance request form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Allowance screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/allowance-form.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="liquidation" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">06</div>
+          <div>
+            <h2>Liquidation</h2>
+            <p>
+              Liquidation is used to record actual expenses and account for funds
+              received through Cash Advance or another operational advance process.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to create a Liquidation</h3>
+        <ol>
+          <li>Open <code>Operational → Liquidation</code>.</li>
+          <li>Click <code>Add Liquidation</code>.</li>
+          <li>Select the related Cash Advance reference.</li>
+          <li>Enter actual expense details and amounts.</li>
+          <li>Upload invoices, receipts, bank transfer proofs, or other supporting documents.</li>
+          <li>Review the difference between the Cash Advance amount and actual expenses.</li>
+          <li>Provide an explanation if there is any remaining balance or additional reimbursement.</li>
+          <li>Click <code>Submit</code> to send the liquidation to Controller for review.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot 1 — Liquidation list page</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Liquidation list screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/liquidation-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot 2 — Liquidation detail form</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Liquidation form screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/liquidation-form.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note warning">
+          <div class="note-icon">!</div>
+          <p>
+            Do not submit a liquidation without sufficient supporting documents.
+            Controller may return the transaction if expense details, supporting
+            evidence, or balance explanations are incomplete.
+          </p>
+        </div>
+      </section>
+
+      <section id="approval" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">07</div>
+          <div>
+            <h2>Approval</h2>
+            <p>
+              The Operational Approval menu displays transactions that require an
+              approval decision from a user with the appropriate approval role.
+            </p>
+          </div>
+        </div>
+
+        <h3>How to approve an Operational transaction</h3>
+        <ol>
+          <li>Open <code>Operational → Approval</code>.</li>
+          <li>Select a transaction with a pending approval status.</li>
+          <li>Open the transaction detail and review all available information.</li>
+          <li>Check the amount, vendor, description, references, and attached documents.</li>
+          <li>Click <code>Approve</code> if the transaction is valid.</li>
+          <li>Click <code>Return</code> if corrections or additional documents are required.</li>
+          <li>Click <code>Reject</code> if the transaction should not continue.</li>
+          <li>Provide a clear note for Return or Reject actions.</li>
+        </ol>
+
+        <div class="screenshot-box">
+          <div class="screenshot-label">
+            <span>Screenshot — Operational Approval list</span>
+            <span>Add image</span>
+          </div>
+
+          <div class="image-placeholder">
+            <div>
+              <strong>Place the Operational Approval screenshot here</strong>
+              <small>
+                Example file:
+                <code>guide/operational/images/approval-list.png</code>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="note success">
+          <div class="note-icon">✓</div>
+          <p>
+            After approval, the system forwards the transaction to the next workflow
+            stage, such as Controller review or Treasury payment processing, depending
+            on the configured business process.
+          </p>
+        </div>
+      </section>
+
+      <section id="transaction-status" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">i</div>
+          <div>
+            <h2>Transaction Status Reference</h2>
+            <p>
+              Status labels help Operational users understand a transaction’s current
+              position and identify which action is required.
+            </p>
+          </div>
+        </div>
+
+        <div class="status-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Recommended Operational Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status status-draft">Draft</span></td>
+                <td>The transaction has been saved but has not been submitted into the workflow.</td>
+                <td>Complete or correct the information, then submit the transaction.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-submitted">Submitted</span></td>
+                <td>The transaction has been submitted and is waiting for review or approval.</td>
+                <td>Monitor the status and wait for the next workflow action.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-returned">Returned / Rejected</span></td>
+                <td>The transaction was returned for correction or rejected based on workflow review.</td>
+                <td>Read the reviewer note, correct the issue, and resubmit when allowed.</td>
+              </tr>
+              <tr>
+                <td><span class="status status-approved">Approved</span></td>
+                <td>The transaction has been approved and can proceed to the next workflow stage.</td>
+                <td>Monitor the payment process through Outstanding Payment or Transaction History.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="operational-workflow" class="guide-section">
+        <div class="section-title">
+          <div class="section-number">→</div>
+          <div>
+            <h2>Operational Workflow</h2>
+            <p>
+              This is a high-level view of the workflow for transactions created
+              through the Operational module.
+            </p>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-item-number">1</div>
+            <strong>Create Transaction</strong>
+            <span>Create a PO, Cash Advance, Payroll, Allowance, or Liquidation request.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">2</div>
+            <strong>Submit Request</strong>
+            <span>Submit the transaction after data and supporting documents are complete.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">3</div>
+            <strong>Controller Review</strong>
+            <span>Controller validates the transaction details and supporting documents.</span>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-item-number">4</div>
+            <strong>Treasury Process</strong>
+            <span>Valid transactions proceed to Treasury for payment processing and release.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="note-icon">i</div>
+          <p>
+            Workflow stages, approval levels, and available actions may differ by
+            transaction type, amount, entity, department, vessel, and role permission
+            configuration.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Finance Management System &copy; 2026 — Operational User Guide
+  </footer>
+</body>
+</html>
