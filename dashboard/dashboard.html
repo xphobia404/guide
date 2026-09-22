@@ -33,685 +33,85 @@
       --sidebar-width: 280px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-width: 320px;
-      margin: 0;
-      color: var(--text);
-      background: var(--bg);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      line-height: 1.65;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
-
-    .topbar-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      width: min(1440px, calc(100% - 48px));
-      min-height: 68px;
-      margin: 0 auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .brand-logo {
-      display: grid;
-      flex: 0 0 auto;
-      width: 36px;
-      height: 36px;
-      place-items: center;
-      color: #ffffff;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), #978dfa);
-      box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28);
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      padding: 8px 14px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-    }
-
-    .button-outline {
-      color: var(--primary);
-      border: 1px solid #d8d4fb;
-      background: #ffffff;
-    }
-
-    .button-outline:hover {
-      border-color: var(--primary);
-      background: var(--primary-light);
-    }
-
-    .button-primary {
-      color: #ffffff;
-      background: var(--primary);
-    }
-
-    .button-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
-      gap: 28px;
-      width: min(1440px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 30px 0 62px;
-    }
-
-    aside {
-      position: sticky;
-      top: 92px;
-      align-self: start;
-      max-height: calc(100vh - 110px);
-      overflow-y: auto;
-      padding: 16px 12px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-    }
-
-    aside::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    aside::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background: #cfccd8;
-    }
-
-    .sidebar-heading {
-      display: block;
-      margin: 3px 9px 12px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.75px;
-      text-transform: uppercase;
-    }
-
-    .sidebar-home {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 14px;
-      padding: 9px 10px;
-      color: var(--primary);
-      border-radius: 8px;
-      background: var(--primary-light);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .sidebar-home:hover {
-      background: #e8e5ff;
-    }
-
-    .sidebar-title {
-      display: block;
-      margin: 16px 9px 7px;
-      color: var(--text);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-    }
-
-    aside nav a {
-      display: block;
-      margin: 2px 0;
-      padding: 8px 10px;
-      color: var(--muted);
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 13px;
-      transition:
-        color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    aside nav a:hover {
-      color: var(--dashboard-dark);
-      background: var(--dashboard-light);
-    }
-
-    .intro {
-      padding: 30px;
-      overflow: hidden;
-      color: #ffffff;
-      border-radius: 16px;
-      background:
-        radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%),
-        linear-gradient(135deg, #5b50ce, #9389f3);
-      box-shadow: 0 14px 32px rgba(115, 103, 240, 0.22);
-    }
-
-    .intro-tag {
-      display: inline-flex;
-      padding: 5px 11px;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .intro h1 {
-      margin: 14px 0 9px;
-      font-size: clamp(28px, 4vw, 36px);
-      line-height: 1.2;
-    }
-
-    .intro p {
-      max-width: 790px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.92);
-    }
-
-    .overview {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .overview-item {
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: var(--surface);
-    }
-
-    .overview-item strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--dashboard-dark);
-      font-size: 14px;
-    }
-
-    .overview-item span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .guide-section {
-      margin-top: 24px;
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-      box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035);
-    }
-
-    .guide-section[id] {
-      scroll-margin-top: 94px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .section-number {
-      display: grid;
-      flex: 0 0 auto;
-      width: 32px;
-      height: 32px;
-      place-items: center;
-      color: var(--dashboard-dark);
-      border-radius: 9px;
-      background: var(--dashboard-light);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.35;
-    }
-
-    .section-title p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    h3 {
-      margin: 24px 0 9px;
-      color: var(--text);
-      font-size: 16px;
-    }
-
-    p {
-      margin: 0 0 12px;
-    }
-
-    ul,
-    ol {
-      margin: 10px 0 0;
-      padding-left: 22px;
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    code {
-      padding: 2px 6px;
-      color: #514b71;
-      border-radius: 5px;
-      background: #f1efff;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 0.88em;
-    }
-
-    .screenshot-box {
-      margin-top: 22px;
-      padding: 18px;
-      border: 1px dashed #d6d2df;
-      border-radius: 12px;
-      background: #fafafd;
-    }
-
-    .screenshot-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .screenshot-label span:last-child {
-      padding: 3px 8px;
-      color: var(--dashboard-dark);
-      border-radius: 999px;
-      background: var(--dashboard-light);
-      font-size: 11px;
-    }
-
-    .image-placeholder {
-      display: grid;
-      min-height: 235px;
-      place-items: center;
-      padding: 22px;
-      color: #9b97a6;
-      border-radius: 9px;
-      background:
-        linear-gradient(45deg, #f2f1f6 25%, transparent 25%),
-        linear-gradient(-45deg, #f2f1f6 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #f2f1f6 75%),
-        linear-gradient(-45deg, transparent 75%, #f2f1f6 75%);
-      background-position:
-        0 0,
-        0 10px,
-        10px -10px,
-        -10px 0;
-      background-size: 20px 20px;
-      text-align: center;
-    }
-
-    .image-placeholder strong {
-      display: block;
-      margin-bottom: 5px;
-      color: #7b7688;
-      font-size: 14px;
-    }
-
-    .image-placeholder small {
-      display: block;
-      max-width: 520px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .image-placeholder code {
-      display: inline-block;
-      margin-top: 7px;
-      color: #6f6b7d;
-      background: rgba(255, 255, 255, 0.75);
-    }
-
-    .image-preview {
-      display: block;
-      width: 100%;
-      max-height: 680px;
-      object-fit: contain;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: #ffffff;
-    }
-
-    .note {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      margin-top: 19px;
-      padding: 14px 16px;
-      color: #4f4775;
-      border-left: 4px solid var(--dashboard);
-      border-radius: 0 9px 9px 0;
-      background: var(--dashboard-light);
-      font-size: 14px;
-    }
-
-    .note-icon {
-      display: grid;
-      flex: 0 0 auto;
-      width: 23px;
-      height: 23px;
-      place-items: center;
-      color: #ffffff;
-      border-radius: 50%;
-      background: var(--dashboard);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .note p {
-      margin: 0;
-    }
-
-    .note.warning {
-      color: #754712;
-      border-left-color: var(--warning);
-      background: #fff7ed;
-    }
-
-    .note.warning .note-icon {
-      background: var(--warning);
-    }
-
-    .note.success {
-      color: #155d34;
-      border-left-color: var(--success);
-      background: #eafaf1;
-    }
-
-    .note.success .note-icon {
-      background: var(--success);
-    }
-
-    .flow {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .flow-item {
-      min-height: 92px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #fcfcfe;
-    }
-
-    .flow-item-number {
-      display: grid;
-      width: 23px;
-      height: 23px;
-      margin-bottom: 8px;
-      place-items: center;
-      color: #ffffff;
-      border-radius: 50%;
-      background: var(--dashboard);
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .flow-item strong {
-      display: block;
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .flow-item span {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 16px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 690px;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    th,
-    td {
-      padding: 12px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      color: var(--text);
-      background: #f8f7fb;
-      font-size: 12px;
-    }
-
-    td:first-child {
-      width: 190px;
-      font-weight: 700;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .dashboard-item {
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #fcfcfe;
-    }
-
-    .dashboard-item strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--dashboard-dark);
-      font-size: 13px;
-    }
-
-    .dashboard-item span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .status {
-      display: inline-flex;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .status-pending {
-      color: #825318;
-      background: #fff0d9;
-    }
-
-    .status-review {
-      color: #1d6174;
-      background: #dff9fd;
-    }
-
-    .status-approved {
-      color: #146137;
-      background: #def7e8;
-    }
-
-    .status-returned {
-      color: #923333;
-      background: #ffe5e5;
-    }
-
-    footer {
-      padding: 25px 20px 35px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 13px;
-    }
-
-    @media (max-width: 1120px) {
-      .overview,
-      .flow {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .dashboard-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      aside {
-        position: static;
-        max-height: none;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .topbar-content,
-      .layout {
-        width: min(100% - 32px, 1440px);
-      }
-
-      .topbar-actions .button-outline {
-        display: none;
-      }
-
-      .brand span {
-        display: none;
-      }
-
-      .layout {
-        padding-top: 18px;
-      }
-
-      .intro,
-      .guide-section {
-        padding: 20px;
-      }
-
-      .overview,
-      .flow,
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .image-placeholder {
-        min-height: 180px;
-      }
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { min-width: 320px; margin: 0; color: var(--text); background: var(--bg); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; }
+    a { color: inherit; }
+    .topbar { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    .topbar-content { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(1440px, calc(100% - 48px)); min-height: 68px; margin: 0 auto; }
+    .brand { display: flex; align-items: center; gap: 11px; min-width: 0; font-size: 15px; font-weight: 700; }
+    .brand-logo { display: grid; flex: 0 0 auto; width: 36px; height: 36px; place-items: center; color: #ffffff; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #978dfa); box-shadow: 0 5px 12px rgba(115, 103, 240, 0.28); font-size: 17px; font-weight: 800; }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease; }
+    .button:hover { transform: translateY(-1px); }
+    .button-outline { color: var(--primary); border: 1px solid #d8d4fb; background: #ffffff; }
+    .button-outline:hover { border-color: var(--primary); background: var(--primary-light); }
+    .button-primary { color: #ffffff; background: var(--primary); }
+    .button-primary:hover { background: var(--primary-dark); }
+    .layout { display: grid; grid-template-columns: var(--sidebar-width) minmax(0, 1fr); gap: 28px; width: min(1440px, calc(100% - 48px)); margin: 0 auto; padding: 30px 0 62px; }
+    aside { position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding: 16px 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+    aside::-webkit-scrollbar { width: 6px; }
+    aside::-webkit-scrollbar-thumb { border-radius: 10px; background: #cfccd8; }
+    .sidebar-heading { display: block; margin: 3px 9px 12px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.75px; text-transform: uppercase; }
+    .sidebar-home { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; padding: 9px 10px; color: var(--primary); border-radius: 8px; background: var(--primary-light); text-decoration: none; font-size: 13px; font-weight: 700; }
+    .sidebar-home:hover { background: #e8e5ff; }
+    .sidebar-title { display: block; margin: 16px 9px 7px; color: var(--text); font-size: 12px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; }
+    aside nav a { display: block; margin: 2px 0; padding: 8px 10px; color: var(--muted); border-radius: 8px; text-decoration: none; font-size: 13px; transition: color 0.2s ease, background 0.2s ease; }
+    aside nav a:hover { color: var(--dashboard-dark); background: var(--dashboard-light); }
+    .intro { padding: 30px; overflow: hidden; color: #ffffff; border-radius: 16px; background: radial-gradient(circle at 92% 5%, rgba(255, 255, 255, 0.22), transparent 28%), linear-gradient(135deg, #5b50ce, #9389f3); box-shadow: 0 14px 32px rgba(115, 103, 240, 0.22); }
+    .intro-tag { display: inline-flex; padding: 5px 11px; border: 1px solid rgba(255, 255, 255, 0.34); border-radius: 999px; background: rgba(255, 255, 255, 0.14); font-size: 12px; font-weight: 700; letter-spacing: 0.3px; }
+    .intro h1 { margin: 14px 0 9px; font-size: clamp(28px, 4vw, 36px); line-height: 1.2; }
+    .intro p { max-width: 790px; margin: 0; color: rgba(255, 255, 255, 0.92); }
+    .overview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .overview-item { padding: 16px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); }
+    .overview-item strong { display: block; margin-bottom: 4px; color: var(--dashboard-dark); font-size: 14px; }
+    .overview-item span { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .guide-section { margin-top: 24px; padding: 28px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: 0 4px 14px rgba(47, 43, 61, 0.035); }
+    .guide-section[id] { scroll-margin-top: 94px; }
+    .section-title { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .section-number { display: grid; flex: 0 0 auto; width: 32px; height: 32px; place-items: center; color: var(--dashboard-dark); border-radius: 9px; background: var(--dashboard-light); font-size: 13px; font-weight: 800; }
+    .section-title h2 { margin: 0; font-size: 22px; line-height: 1.35; }
+    .section-title p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+    h3 { margin: 24px 0 9px; color: var(--text); font-size: 16px; }
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 10px 0 0; padding-left: 22px; }
+    li { margin-bottom: 8px; }
+    code { padding: 2px 6px; color: #514b71; border-radius: 5px; background: #f1efff; font-family: Consolas, Monaco, monospace; font-size: 0.88em; }
+    .screenshot-box { margin-top: 22px; padding: 18px; border: 1px dashed #d6d2df; border-radius: 12px; background: #fafafd; }
+    .screenshot-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .image-preview { display: block; width: 100%; max-height: 680px; object-fit: contain; border: 1px solid var(--border); border-radius: 9px; background: #ffffff; }
+    .note { display: flex; align-items: flex-start; gap: 11px; margin-top: 19px; padding: 14px 16px; color: #4f4775; border-left: 4px solid var(--dashboard); border-radius: 0 9px 9px 0; background: var(--dashboard-light); font-size: 14px; }
+    .note-icon { display: grid; flex: 0 0 auto; width: 23px; height: 23px; place-items: center; color: #ffffff; border-radius: 50%; background: var(--dashboard); font-size: 12px; font-weight: 800; }
+    .note p { margin: 0; }
+    .note.warning { color: #754712; border-left-color: var(--warning); background: #fff7ed; }
+    .note.warning .note-icon { background: var(--warning); }
+    .table-wrap { overflow-x: auto; margin-top: 16px; }
+    table { width: 100%; min-width: 690px; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+    th { color: var(--text); background: #f8f7fb; font-size: 12px; }
+    td:first-child { width: 190px; font-weight: 700; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .dashboard-item { padding: 15px; border: 1px solid var(--border); border-radius: 10px; background: #fcfcfe; }
+    .dashboard-item strong { display: block; margin-bottom: 4px; color: var(--dashboard-dark); font-size: 13px; }
+    .dashboard-item span { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .status { display: inline-flex; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .status-pending { color: #825318; background: #fff0d9; }
+    .status-review { color: #1d6174; background: #dff9fd; }
+    .status-approved { color: #146137; background: #def7e8; }
+    .status-returned { color: #923333; background: #ffe5e5; }
+    footer { padding: 25px 20px 35px; color: var(--muted); text-align: center; font-size: 13px; }
+    @media (max-width: 1120px) { .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } aside { position: static; max-height: none; } }
+    @media (max-width: 640px) { .topbar-content, .layout { width: min(100% - 32px, 1440px); } .topbar-actions .button-outline, .brand span { display: none; } .layout { padding-top: 18px; } .intro, .guide-section { padding: 20px; } .overview, .dashboard-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
-
 <body>
   <header class="topbar">
     <div class="topbar-content">
-      <div class="brand">
-        <div class="brand-logo">F</div>
-        <span>Finance Management System</span>
-      </div>
-
+      <div class="brand"><div class="brand-logo">F</div><span>Finance Management System</span></div>
       <div class="topbar-actions">
-        <a href="../userguide.html" class="button button-outline">
-          ← All Guides
-        </a>
-
-        <a href="/" class="button button-primary">
-          Open Application
-        </a>
+        <a href="../userguide.html" class="button button-outline">← All Guides</a>
+        <a href="/" class="button button-primary">Open Application</a>
       </div>
     </div>
   </header>
@@ -719,19 +119,13 @@
   <div class="layout">
     <aside>
       <span class="sidebar-heading">Guide Navigation</span>
-
-      <a href="../userguide.html" class="sidebar-home">
-        <span>⌂</span>
-        <span>User Guide Home</span>
-      </a>
-
+      <a href="../userguide.html" class="sidebar-home"><span>⌂</span><span>User Guide Home</span></a>
       <nav>
         <span class="sidebar-title">Dashboard</span>
         <a href="#overview">1. Dashboard Overview</a>
         <a href="#summary-cards">2. Summary Cards</a>
         <a href="#charts">3. Charts and Trends</a>
-        <a href="#activity">4. Recent New Activity</a>
-
+        <a href="#activity">4. Recent Activity</a>
         <span class="sidebar-title">Additional Information</span>
         <a href="#status-reference">Transaction Status</a>
         <a href="#troubleshooting">Troubleshooting</a>
@@ -742,375 +136,93 @@
       <section class="intro">
         <span class="intro-tag">DASHBOARD MODULE</span>
         <h1>Dashboard User Guide</h1>
-        <p>
-          The Dashboard is the main landing page of the Finance Management System.
-          It provides a high-level view of transaction activity, pending work,
-          approval tasks, payment progress, notifications, and finance trends.
-        </p>
+        <p>The Dashboard is the main landing page of the Finance Management System. It provides a high-level view of transaction activity, pending work, approval tasks, payment progress, notifications, and finance trends.</p>
       </section>
 
       <section class="overview">
-        <div class="overview-item">
-          <strong>Quick Summary</strong>
-          <span>View key transaction totals, counts, and financial indicators.</span>
-        </div>
-
-        <div class="overview-item">
-          <strong>Task Monitoring</strong>
-          <span>Identify approvals, reviews, and payment actions that need attention.</span>
-        </div>
-
-        <div class="overview-item">
-          <strong>Trend Analysis</strong>
-          <span>Review charts and period-based transaction trends.</span>
-        </div>
-
-        <div class="overview-item">
-          <strong>Quick Navigation</strong>
-          <span>Open related records and modules directly from dashboard widgets.</span>
-        </div>
+        <div class="overview-item"><strong>Quick Summary</strong><span>View key transaction totals, counts, and financial indicators.</span></div>
+        <div class="overview-item"><strong>Task Monitoring</strong><span>Identify approvals, reviews, and payment actions that need attention.</span></div>
+        <div class="overview-item"><strong>Trend Analysis</strong><span>Review charts and period-based transaction trends.</span></div>
+        <div class="overview-item"><strong>Quick Navigation</strong><span>Open related records and modules directly from dashboard widgets.</span></div>
       </section>
 
       <section id="overview" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">01</div>
-          <div>
-            <h2>Dashboard Overview</h2>
-            <p>
-              The Dashboard is displayed after login and provides information that
-              is relevant to the current user’s role, permissions, entity scope,
-              and assigned workflow responsibilities.
-            </p>
-          </div>
-        </div>
-
+        <div class="section-title"><div class="section-number">01</div><div><h2>Dashboard Overview</h2><p>The Dashboard is displayed after login and provides information relevant to the current user’s role, permissions, entity scope, and assigned workflow responsibilities.</p></div></div>
         <h3>What you may see on the Dashboard</h3>
         <ul>
-          <li>Transaction summary cards and financial totals.</li>
-          <li>Pending approval, review, or payment task counters.</li>
-          <li>Transaction status summaries.</li>
-          <li>Charts for expense, payment, or transaction trends.</li>
-          <li>Recent transaction activity and system notifications.</li>
-          <li>Shortcuts to relevant Operational, Controller, Treasury, or History pages.</li>
+          <li>Transaction summary cards and financial totals.</li><li>Pending approval, review, or payment task counters.</li><li>Transaction status summaries.</li><li>Charts for expense, payment, or transaction trends.</li><li>Recent transaction activity and system notifications.</li><li>Shortcuts to relevant Operational, Controller, Treasury, or History pages.</li>
         </ul>
-
         <h3>How to use the Dashboard</h3>
-        <ol>
-          <li>Log in to the Finance Management System.</li>
-          <li>Review the summary cards at the top of the Dashboard.</li>
-          <li>Check pending tasks that require your action.</li>
-          <li>Use filters to adjust the displayed period or scope when available.</li>
-          <li>Click cards, chart items, or task rows to open the related transaction list or detail page.</li>
-        </ol>
-
-        <div class="screenshot-box">
-          <div class="screenshot-label">
-            <span>Screenshot — Full Dashboard page</span>
-          </div>
-
-          
-          <img
-            src="./images/dashboard-overview.png"
-            alt="Finance Management System Dashboard overview"
-            class="image-preview"
-          />
-        </div>
-
-        <div class="note">
-          <div class="note-icon">i</div>
-          <p>
-            Dashboard widgets can be different for each user. For example, an
-            Operational user may see submission-related tasks, while a Treasury
-            user may see payment processing and release tasks.
-          </p>
-        </div>
+        <ol><li>Log in to the Finance Management System.</li><li>Review the summary cards at the top of the Dashboard.</li><li>Check pending tasks that require your action.</li><li>Use filters to adjust the displayed period or scope when available.</li><li>Click cards, chart items, or task rows to open the related transaction list or detail page.</li></ol>
+        <div class="screenshot-box"><div class="screenshot-label"><span>Screenshot — Full Dashboard page</span></div><img src="./images/dashboard-overview.png" alt="Finance Management System Dashboard overview" class="image-preview" /></div>
+        <div class="note"><div class="note-icon">i</div><p>Dashboard widgets can be different for each user. For example, an Operational user may see submission-related tasks, while a Treasury user may see payment processing and release tasks.</p></div>
       </section>
 
       <section id="summary-cards" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">02</div>
-          <div>
-            <h2>Summary Cards</h2>
-            <p>
-              Summary cards provide quick counts or totals for selected finance
-              activities, transaction statuses, and payment-related information.
-            </p>
-          </div>
-        </div>
-
+        <div class="section-title"><div class="section-number">02</div><div><h2>Summary Cards</h2><p>Summary cards provide quick counts or totals for selected finance activities, transaction statuses, and payment-related information.</p></div></div>
         <h3>Common summary card examples</h3>
         <div class="dashboard-grid">
-          <div class="dashboard-item">
-            <strong>Total Transactions</strong>
-            <span>Shows the number or value of transactions within the selected period.</span>
-          </div>
-
-          <div class="dashboard-item">
-            <strong>Pending Approval</strong>
-            <span>Shows transactions that are waiting for an approver’s action.</span>
-          </div>
-
-          <div class="dashboard-item">
-            <strong>Outstanding Payment</strong>
-            <span>Shows payment requests that remain unpaid or need follow-up.</span>
-          </div>
-
-          <div class="dashboard-item">
-            <strong>Cash Advance</strong>
-            <span>Shows pending, active, or outstanding Cash Advance records.</span>
-          </div>
-
-          <div class="dashboard-item">
-            <strong>Liquidation</strong>
-            <span>Shows liquidation submissions that require review or completion.</span>
-          </div>
-
-          <div class="dashboard-item">
-            <strong>Payment Released</strong>
-            <span>Shows payments that have been completed within the selected period.</span>
-          </div>
+          <div class="dashboard-item"><strong>Total Transactions</strong><span>Shows the number or value of transactions within the selected period.</span></div><div class="dashboard-item"><strong>Pending Approval</strong><span>Shows transactions that are waiting for an approver’s action.</span></div><div class="dashboard-item"><strong>Outstanding Payment</strong><span>Shows payment requests that remain unpaid or need follow-up.</span></div><div class="dashboard-item"><strong>Cash Advance</strong><span>Shows pending, active, or outstanding Cash Advance records.</span></div><div class="dashboard-item"><strong>Liquidation</strong><span>Shows liquidation submissions that require review or completion.</span></div><div class="dashboard-item"><strong>Payment Released</strong><span>Shows payments that have been completed within the selected period.</span></div>
         </div>
-
         <h3>How to use a summary card</h3>
-        <ol>
-          <li>Review the title, count, amount, and displayed period on the card.</li>
-          <li>Click the card if it is interactive.</li>
-          <li>The system may open a filtered transaction list related to that card.</li>
-          <li>Use the transaction list to review individual records and their current status.</li>
-        </ol>
-
-        <div class="screenshot-box">
-          <div class="screenshot-label">
-            <span>Screenshot — Dashboard summary cards</span>
-          </div>
-
-            <img
-                src="./images/dashboard-summary.png"
-                alt="Finance Management System Dashboard summary"
-                class="image-preview"
-            />
-        </div>
-
-        <div class="note warning">
-          <div class="note-icon">!</div>
-          <p>
-            Always review the selected date range and filter context before using
-            a dashboard total for reporting or decision-making. A card may reflect
-            only the current period, entity, department, or assigned user scope.
-          </p>
-        </div>
+        <ol><li>Review the title, count, amount, and displayed period on the card.</li><li>Click the card if it is interactive.</li><li>The system may open a filtered transaction list related to that card.</li><li>Use the transaction list to review individual records and their current status.</li></ol>
+        <div class="screenshot-box"><div class="screenshot-label"><span>Screenshot — Dashboard summary cards</span></div><img src="./images/dashboard-summary.png" alt="Finance Management System Dashboard summary" class="image-preview" /></div>
+        <div class="note warning"><div class="note-icon">!</div><p>Always review the selected date range and filter context before using a dashboard total for reporting or decision-making. A card may reflect only the current period, entity, department, or assigned user scope.</p></div>
       </section>
 
       <section id="charts" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">03</div>
-          <div>
-            <h2>Charts and Trends</h2>
-            <p>
-              Dashboard charts visualize transaction patterns and help users monitor
-              expense, payment, approval, or operational trends over time.
-            </p>
-          </div>
-        </div>
-
+        <div class="section-title"><div class="section-number">03</div><div><h2>Charts and Trends</h2><p>Dashboard charts visualize transaction patterns and help users monitor expense, payment, approval, or operational trends over time.</p></div></div>
         <h3>Typical chart information</h3>
-        <ul>
-          <li>Transaction value by day, week, month, or year.</li>
-          <li>Payment amounts by period or payment status.</li>
-          <li>Expense distribution by department, entity, vessel, vendor, or category.</li>
-          <li>Number of pending, approved, returned, or released transactions.</li>
-          <li>Comparison between planned, requested, approved, and paid values if supported.</li>
-        </ul>
-
+        <ul><li>Transaction value by day, week, month, or year.</li><li>Payment amounts by period or payment status.</li><li>Expense distribution by department, entity, vessel, vendor, or category.</li><li>Number of pending, approved, returned, or released transactions.</li><li>Comparison between planned, requested, approved, and paid values if supported.</li></ul>
         <h3>How to review a chart</h3>
-        <ol>
-          <li>Apply the desired Dashboard filters first.</li>
-          <li>Review the chart title to understand what data is being displayed.</li>
-          <li>Hover over a chart element if the interface provides tooltips.</li>
-          <li>Compare periods, categories, or status values shown in the chart legend.</li>
-          <li>Click a chart segment or use a related action to drill down into underlying records when supported.</li>
-        </ol>
-
-        <div class="screenshot-box">
-          <div class="screenshot-label">
-            <span>Screenshot — Dashboard chart or trend widget</span>
-          </div>
-
-            <img
-                src="./images/dashboard-chart.png"
-                alt="Finance Management System Dashboard Chart"
-                class="image-preview"
-            />
-        </div>
-
-        <div class="note">
-          <div class="note-icon">i</div>
-          <p>
-            Charts are intended for monitoring and trend analysis. For exact
-            transaction-level validation, open the linked transaction list or use
-            Transaction History.
-          </p>
-        </div>
+        <ol><li>Apply the desired Dashboard filters first.</li><li>Review the chart title to understand what data is being displayed.</li><li>Hover over a chart element if the interface provides tooltips.</li><li>Compare periods, categories, or status values shown in the chart legend.</li><li>Click a chart segment or use a related action to drill down into underlying records when supported.</li></ol>
+        <div class="screenshot-box"><div class="screenshot-label"><span>Screenshot — Dashboard chart or trend widget</span></div><img src="./images/dashboard-chart.png" alt="Finance Management System Dashboard chart" class="image-preview" /></div>
+        <div class="note"><div class="note-icon">i</div><p>Charts are intended for monitoring and trend analysis. For exact transaction-level validation, open the linked transaction list or use Transaction History.</p></div>
       </section>
 
       <section id="activity" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">04</div>
-          <div>
-            <h2>Activity Recent</h2>
-            <p>
-              Dashboard charts visualize transaction patterns and help users monitor
-              expense, payment, approval, or operational trends over time.
-            </p>
-          </div>
-        </div>
-
-        <h3>Typical chart information</h3>
+        <div class="section-title"><div class="section-number">04</div><div><h2>Recent Activity</h2><p>The Recent Activity widget displays the latest transaction-related events, allowing users to quickly monitor newly created or updated records.</p></div></div>
+        <h3>Information displayed</h3>
         <ul>
-          <li>Transaction value by day, week, month, or year.</li>
-          <li>Payment amounts by period or payment status.</li>
-          <li>Expense distribution by department, entity, vessel, vendor, or category.</li>
-          <li>Number of pending, approved, returned, or released transactions.</li>
-          <li>Comparison between planned, requested, approved, and paid values if supported.</li>
+          <li>The name or type of a newly created or updated transaction.</li>
+          <li>The latest transaction or activity status.</li>
+          <li>The time when the activity occurred.</li>
+          <li>The user or responsible party associated with the activity, when available.</li>
         </ul>
-
-        <h3>How to review a chart</h3>
+        <h3>How to use Recent Activity</h3>
         <ol>
-          <li>Apply the desired Dashboard filters first.</li>
-          <li>Review the chart title to understand what data is being displayed.</li>
-          <li>Hover over a chart element if the interface provides tooltips.</li>
-          <li>Compare periods, categories, or status values shown in the chart legend.</li>
-          <li>Click a chart segment or use a related action to drill down into underlying records when supported.</li>
+          <li>Scroll to the <strong>Recent Activity</strong> section on the Dashboard.</li>
+          <li>Review the latest entries to identify newly created or updated transactions.</li>
+          <li>Check the displayed status and time to determine which transactions may require follow-up.</li>
+          <li>Click an activity item, when available, to open its related transaction details.</li>
+          <li>Open Transaction History when you need a complete activity record or additional transaction details.</li>
         </ol>
-
-        <div class="screenshot-box">
-          <div class="screenshot-label">
-            <span>Screenshot — Dashboard chart or trend widget</span>
-          </div>
-
-            <img
-                src="./images/dashboard-recent.png"
-                alt="Finance Management System Dashboard Recent"
-                class="image-preview"
-            />
-        </div>
-
-        <div class="note">
-          <div class="note-icon">i</div>
-          <p>
-            Charts are intended for monitoring and trend analysis. For exact
-            transaction-level validation, open the linked transaction list or use
-            Transaction History.
-          </p>
-        </div>
+        <div class="screenshot-box"><div class="screenshot-label"><span>Screenshot — Recent Activity</span></div><img src="./images/dashboard-recent.png" alt="Finance Management System Recent Activity" class="image-preview" /></div>
+        <div class="note"><div class="note-icon">i</div><p>Recent Activity is intended for quick monitoring. Open the related transaction or Transaction History to review full details, documents, and the complete activity trail.</p></div>
       </section>
 
       <section id="status-reference" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">i</div>
-          <div>
-            <h2>Transaction Status Reference</h2>
-            <p>
-              Dashboard widgets may summarize transactions by status. The available
-              status names can differ depending on the transaction type and configured workflow.
-            </p>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Status</th>
-                <th>Description</th>
-                <th>Typical Next Step</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="status status-pending">Pending</span></td>
-                <td>The transaction is waiting for review, approval, payment processing, or another workflow action.</td>
-                <td>The assigned user opens the transaction and completes the required action.</td>
-              </tr>
-              <tr>
-                <td><span class="status status-review">On Review</span></td>
-                <td>The transaction is currently being checked by Operational, Controller, or Treasury.</td>
-                <td>The responsible reviewer validates data and documents, then forwards or returns the transaction.</td>
-              </tr>
-              <tr>
-                <td><span class="status status-returned">Returned / Rejected</span></td>
-                <td>The transaction requires correction or has been rejected based on workflow rules.</td>
-                <td>The requester reviews the note, corrects the issue, and resubmits when permitted.</td>
-              </tr>
-              <tr>
-                <td><span class="status status-approved">Approved</span></td>
-                <td>The required approval has been completed and the transaction can move to the next workflow stage.</td>
-                <td>The transaction proceeds to Controller review, Treasury processing, or the configured next stage.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="section-title"><div class="section-number">i</div><div><h2>Transaction Status Reference</h2><p>Dashboard widgets may summarize transactions by status. The available status names can differ depending on the transaction type and configured workflow.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Status</th><th>Description</th><th>Typical Next Step</th></tr></thead><tbody>
+          <tr><td><span class="status status-pending">Pending</span></td><td>The transaction is waiting for review, approval, payment processing, or another workflow action.</td><td>The assigned user opens the transaction and completes the required action.</td></tr>
+          <tr><td><span class="status status-review">On Review</span></td><td>The transaction is currently being checked by Operational, Controller, or Treasury.</td><td>The responsible reviewer validates data and documents, then forwards or returns the transaction.</td></tr>
+          <tr><td><span class="status status-returned">Returned / Rejected</span></td><td>The transaction requires correction or has been rejected based on workflow rules.</td><td>The requester reviews the note, corrects the issue, and resubmits when permitted.</td></tr>
+          <tr><td><span class="status status-approved">Approved</span></td><td>The required approval has been completed and the transaction can move to the next workflow stage.</td><td>The transaction proceeds to Controller review, Treasury processing, or the configured next stage.</td></tr>
+        </tbody></table></div>
       </section>
 
       <section id="troubleshooting" class="guide-section">
-        <div class="section-title">
-          <div class="section-number">?</div>
-          <div>
-            <h2>Dashboard Troubleshooting</h2>
-            <p>
-              Use the following checks when Dashboard data does not appear as expected.
-            </p>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Issue</th>
-                <th>Possible Cause</th>
-                <th>Recommended Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>No data is shown</td>
-                <td>The active date range or filters do not include any records.</td>
-                <td>Check the selected period, entity, department, vessel, and other filters.</td>
-              </tr>
-              <tr>
-                <td>Expected card is missing</td>
-                <td>The card is not available for the current role or permission.</td>
-                <td>Confirm your assigned role and contact the system administrator if access is required.</td>
-              </tr>
-              <tr>
-                <td>Task count differs from expectation</td>
-                <td>The list may be filtered by user scope, role, workflow stage, or transaction status.</td>
-                <td>Open the task list and review applied filters and transaction statuses.</td>
-              </tr>
-              <tr>
-                <td>Chart does not update</td>
-                <td>The page may need refresh, filters may not have been applied, or data may still be processing.</td>
-                <td>Refresh the page, reapply filters, and confirm the date range and permissions.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="note">
-          <div class="note-icon">i</div>
-          <p>
-            When reporting a Dashboard issue, include a screenshot, your current
-            filters, the affected card or chart title, the time of the issue, and
-            the expected result. This helps the administrator investigate faster.
-          </p>
-        </div>
+        <div class="section-title"><div class="section-number">?</div><div><h2>Dashboard Troubleshooting</h2><p>Use the following checks when Dashboard data does not appear as expected.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Issue</th><th>Possible Cause</th><th>Recommended Action</th></tr></thead><tbody>
+          <tr><td>No data is shown</td><td>The active date range or filters do not include any records.</td><td>Check the selected period, entity, department, vessel, and other filters.</td></tr>
+          <tr><td>Expected card is missing</td><td>The card is not available for the current role or permission.</td><td>Confirm your assigned role and contact the system administrator if access is required.</td></tr>
+          <tr><td>Task count differs from expectation</td><td>The list may be filtered by user scope, role, workflow stage, or transaction status.</td><td>Open the task list and review applied filters and transaction statuses.</td></tr>
+          <tr><td>Chart does not update</td><td>The page may need refresh, filters may not have been applied, or data may still be processing.</td><td>Refresh the page, reapply filters, and confirm the date range and permissions.</td></tr>
+        </tbody></table></div>
+        <div class="note"><div class="note-icon">i</div><p>When reporting a Dashboard issue, include a screenshot, your current filters, the affected card or chart title, the time of the issue, and the expected result. This helps the administrator investigate faster.</p></div>
       </section>
     </main>
   </div>
-
-  <footer>
-    Finance Management System &copy; 2026 — Dashboard User Guide
-  </footer>
+  <footer>Finance Management System &copy; 2026 — Dashboard User Guide</footer>
 </body>
 </html>
